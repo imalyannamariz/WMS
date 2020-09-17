@@ -1,0 +1,805 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WarehouseManagementSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="250" />
+          <Property Name="CategoryDescription" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="250" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="SubCategoryID" Type="int" />
+          <Property Name="WarehouseID" Type="int" />
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="250" />
+          <Property Name="ItemDescription" Type="varchar(max)" />
+          <Property Name="Stocks" Type="int" />
+          <Property Name="UsedStocks" Type="int" />
+          <Property Name="Unit" Type="varchar" MaxLength="50" />
+          <Property Name="MaterialCode" Type="varchar" MaxLength="50" />
+          <Property Name="MISNo" Type="bigint" />
+          <Property Name="Origin" Type="varchar" MaxLength="250" />
+          <Property Name="ReceivedDate" Type="datetime" />
+          <Property Name="Remarks" Type="varchar(max)" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="250" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="WarehouseID" />
+          </Key>
+          <Property Name="WarehouseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WarehouseName" Type="varchar" MaxLength="250" />
+          <Property Name="WarehouseAddress" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="250" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="SubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubCategoryName" Type="varchar" MaxLength="250" />
+          <Property Name="SubCategoryDescription" Type="varchar(max)" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="250" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Category' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="CategoryDescription" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CategoryDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DeletedDate" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Inventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Inventory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="SubCategoryID" />
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="ItemName" />
+            <PropertyRef Name="ItemDescription" />
+            <PropertyRef Name="Stocks" />
+            <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="Unit" />
+            <PropertyRef Name="MaterialCode" />
+            <PropertyRef Name="MISNo" />
+            <PropertyRef Name="Origin" />
+            <PropertyRef Name="ReceivedDate" />
+            <PropertyRef Name="Remarks" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ItemDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="Stocks" Type="int" Nullable="false" />
+          <Property Name="UsedStocks" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaterialCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MISNo" Type="bigint" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ReceivedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DeletedDate" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Location">
+          <Key>
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="WarehouseName" />
+            <PropertyRef Name="WarehouseAddress" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="WarehouseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WarehouseName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="WarehouseAddress" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DeletedDate" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Subcategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Subcategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+            <PropertyRef Name="SubCategoryName" />
+            <PropertyRef Name="SubCategoryDescription" />
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="SubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubCategoryName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="SubCategoryDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DeletedDate" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Inventory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WarehouseManagementSystemModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Category" EntityType="Self.View_Category" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Category].[CategoryID] AS [CategoryID], 
+    [View_Category].[CategoryName] AS [CategoryName], 
+    [View_Category].[CategoryDescription] AS [CategoryDescription], 
+    [View_Category].[CreatedBy] AS [CreatedBy], 
+    [View_Category].[CreatedDate] AS [CreatedDate], 
+    [View_Category].[ModifiedBy] AS [ModifiedBy], 
+    [View_Category].[ModifiedDate] AS [ModifiedDate], 
+    [View_Category].[IsDeleted] AS [IsDeleted], 
+    [View_Category].[DeletedBy] AS [DeletedBy], 
+    [View_Category].[DeletedDate] AS [DeletedDate]
+    FROM [dbo].[View_Category] AS [View_Category]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Inventory" EntityType="Self.View_Inventory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Inventory].[CategoryID] AS [CategoryID], 
+    [View_Inventory].[SubCategoryID] AS [SubCategoryID], 
+    [View_Inventory].[WarehouseID] AS [WarehouseID], 
+    [View_Inventory].[ItemID] AS [ItemID], 
+    [View_Inventory].[ItemName] AS [ItemName], 
+    [View_Inventory].[ItemDescription] AS [ItemDescription], 
+    [View_Inventory].[Stocks] AS [Stocks], 
+    [View_Inventory].[UsedStocks] AS [UsedStocks], 
+    [View_Inventory].[Unit] AS [Unit], 
+    [View_Inventory].[MaterialCode] AS [MaterialCode], 
+    [View_Inventory].[MISNo] AS [MISNo], 
+    [View_Inventory].[Origin] AS [Origin], 
+    [View_Inventory].[ReceivedDate] AS [ReceivedDate], 
+    [View_Inventory].[Remarks] AS [Remarks], 
+    [View_Inventory].[CreatedBy] AS [CreatedBy], 
+    [View_Inventory].[CreatedDate] AS [CreatedDate], 
+    [View_Inventory].[ModifiedBy] AS [ModifiedBy], 
+    [View_Inventory].[ModifiedDate] AS [ModifiedDate], 
+    [View_Inventory].[IsDeleted] AS [IsDeleted], 
+    [View_Inventory].[DeletedBy] AS [DeletedBy], 
+    [View_Inventory].[DeletedDate] AS [DeletedDate]
+    FROM [dbo].[View_Inventory] AS [View_Inventory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Location" EntityType="Self.View_Location" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Location].[WarehouseID] AS [WarehouseID], 
+    [View_Location].[WarehouseName] AS [WarehouseName], 
+    [View_Location].[WarehouseAddress] AS [WarehouseAddress], 
+    [View_Location].[CreatedBy] AS [CreatedBy], 
+    [View_Location].[CreatedDate] AS [CreatedDate], 
+    [View_Location].[ModifiedBy] AS [ModifiedBy], 
+    [View_Location].[ModifiedDate] AS [ModifiedDate], 
+    [View_Location].[IsDeleted] AS [IsDeleted], 
+    [View_Location].[DeletedBy] AS [DeletedBy], 
+    [View_Location].[DeletedDate] AS [DeletedDate]
+    FROM [dbo].[View_Location] AS [View_Location]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Subcategory" EntityType="Self.View_Subcategory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Subcategory].[SubCategoryID] AS [SubCategoryID], 
+    [View_Subcategory].[SubCategoryName] AS [SubCategoryName], 
+    [View_Subcategory].[SubCategoryDescription] AS [SubCategoryDescription], 
+    [View_Subcategory].[CategoryID] AS [CategoryID], 
+    [View_Subcategory].[CreatedBy] AS [CreatedBy], 
+    [View_Subcategory].[CreatedDate] AS [CreatedDate], 
+    [View_Subcategory].[ModifiedBy] AS [ModifiedBy], 
+    [View_Subcategory].[ModifiedDate] AS [ModifiedDate], 
+    [View_Subcategory].[IsDeleted] AS [IsDeleted], 
+    [View_Subcategory].[DeletedBy] AS [DeletedBy], 
+    [View_Subcategory].[DeletedDate] AS [DeletedDate]
+    FROM [dbo].[View_Subcategory] AS [View_Subcategory]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Inventory_Category" Association="Self.FK_Inventory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Location" Association="Self.FK_Inventory_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_SubCategory" Association="Self.FK_Inventory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategory_Category" Association="Self.FK_SubCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="SubCategory" EntitySet="SubCategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WarehouseManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="WarehouseManagementSystemModel.Category" />
+          <EntitySet Name="Inventories" EntityType="WarehouseManagementSystemModel.Inventory" />
+          <EntitySet Name="Locations" EntityType="WarehouseManagementSystemModel.Location" />
+          <EntitySet Name="SubCategories" EntityType="WarehouseManagementSystemModel.SubCategory" />
+          <AssociationSet Name="FK_Inventory_Category" Association="WarehouseManagementSystemModel.FK_Inventory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategory_Category" Association="WarehouseManagementSystemModel.FK_SubCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="SubCategory" EntitySet="SubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Location" Association="WarehouseManagementSystemModel.FK_Inventory_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_SubCategory" Association="WarehouseManagementSystemModel.FK_Inventory_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategories" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <EntitySet Name="View_Category" EntityType="WarehouseManagementSystemModel.View_Category" />
+          <EntitySet Name="View_Inventory" EntityType="WarehouseManagementSystemModel.View_Inventory" />
+          <EntitySet Name="View_Location" EntityType="WarehouseManagementSystemModel.View_Location" />
+          <EntitySet Name="View_Subcategory" EntityType="WarehouseManagementSystemModel.View_Subcategory" />
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Inventories" Relationship="WarehouseManagementSystemModel.FK_Inventory_Category" FromRole="Category" ToRole="Inventory" />
+          <NavigationProperty Name="SubCategories" Relationship="WarehouseManagementSystemModel.FK_SubCategory_Category" FromRole="Category" ToRole="SubCategory" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="SubCategoryID" Type="Int32" />
+          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Stocks" Type="Int32" />
+          <Property Name="UsedStocks" Type="Int32" />
+          <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MISNo" Type="Int64" />
+          <Property Name="Origin" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ReceivedDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="WarehouseManagementSystemModel.FK_Inventory_Category" FromRole="Inventory" ToRole="Category" />
+          <NavigationProperty Name="Location" Relationship="WarehouseManagementSystemModel.FK_Inventory_Location" FromRole="Inventory" ToRole="Location" />
+          <NavigationProperty Name="SubCategory" Relationship="WarehouseManagementSystemModel.FK_Inventory_SubCategory" FromRole="Inventory" ToRole="SubCategory" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="WarehouseID" />
+          </Key>
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Inventories" Relationship="WarehouseManagementSystemModel.FK_Inventory_Location" FromRole="Location" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SubCategoryDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DeletedBy" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="WarehouseManagementSystemModel.FK_SubCategory_Category" FromRole="SubCategory" ToRole="Category" />
+          <NavigationProperty Name="Inventories" Relationship="WarehouseManagementSystemModel.FK_Inventory_SubCategory" FromRole="SubCategory" ToRole="Inventory" />
+        </EntityType>
+        <Association Name="FK_Inventory_Category">
+          <End Type="WarehouseManagementSystemModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="WarehouseManagementSystemModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategory_Category">
+          <End Type="WarehouseManagementSystemModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="WarehouseManagementSystemModel.SubCategory" Role="SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Location">
+          <End Type="WarehouseManagementSystemModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="WarehouseManagementSystemModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_SubCategory">
+          <End Type="WarehouseManagementSystemModel.SubCategory" Role="SubCategory" Multiplicity="0..1" />
+          <End Type="WarehouseManagementSystemModel.Inventory" Role="Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="View_Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="CategoryDescription" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Inventory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="SubCategoryID" />
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="ItemName" />
+            <PropertyRef Name="ItemDescription" />
+            <PropertyRef Name="Stocks" />
+            <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="Unit" />
+            <PropertyRef Name="MaterialCode" />
+            <PropertyRef Name="MISNo" />
+            <PropertyRef Name="Origin" />
+            <PropertyRef Name="ReceivedDate" />
+            <PropertyRef Name="Remarks" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Stocks" Type="Int32" Nullable="false" />
+          <Property Name="UsedStocks" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MISNo" Type="Int64" Nullable="false" />
+          <Property Name="Origin" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ReceivedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Location">
+          <Key>
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="WarehouseName" />
+            <PropertyRef Name="WarehouseAddress" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseAddress" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Subcategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+            <PropertyRef Name="SubCategoryName" />
+            <PropertyRef Name="SubCategoryDescription" />
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SubCategoryDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WarehouseManagementSystemModelStoreContainer" CdmEntityContainer="WMSEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CategoryDescription" ColumnName="CategoryDescription" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="MISNo" ColumnName="MISNo" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
+                <ScalarProperty Name="Stocks" ColumnName="Stocks" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="WarehouseAddress" ColumnName="WarehouseAddress" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategory">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryDescription" ColumnName="SubCategoryDescription" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Category">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Category">
+              <MappingFragment StoreEntitySet="View_Category">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CategoryDescription" ColumnName="CategoryDescription" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Inventory">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Inventory">
+              <MappingFragment StoreEntitySet="View_Inventory">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="MISNo" ColumnName="MISNo" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
+                <ScalarProperty Name="Stocks" ColumnName="Stocks" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Location">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Location">
+              <MappingFragment StoreEntitySet="View_Location">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="WarehouseAddress" ColumnName="WarehouseAddress" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Subcategory">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Subcategory">
+              <MappingFragment StoreEntitySet="View_Subcategory">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryDescription" ColumnName="SubCategoryDescription" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

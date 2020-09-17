@@ -8,19 +8,19 @@ namespace WMS.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Inventory()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Warehouse()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Category()
         {
             ViewBag.Message = "Your contact page.";
 

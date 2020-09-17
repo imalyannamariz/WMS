@@ -24,7 +24,23 @@ namespace WMS
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/layout.css"));
+
+            //Datatables JS
+            bundles.Add(new ScriptBundle("~/bundles/DataTables-js").Include(
+                      "~/Scripts/DataTables/jquery.dataTables.js",
+                      "~/Scripts/DataTables/responsive.bootstrap4.js"));
+
+            //Datatables css
+            bundles.Add(new StyleBundle("~/bundles/DataTables-css").Include(
+                    "~/Content/DataTables/css/jquery.dataTables.css",
+                     "~/Content/DataTables/css/responsive.bootstrap4.css"));
+
+            //Inventory
+            bundles.Add(new ScriptBundle("~/bundles/Inventory-js").Include(
+                      "~/Scripts/Inventory/Inventory.js"));
         }
     }
 }

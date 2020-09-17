@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Inventory";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var GetRecord = "@Url.Action("GetRecord", "Inventory")";
+    </script>
+
+    @Scripts.Render("~/bundles/Inventory-js");
+}
+
+<div class="card ">
+    <div class="card-header">INVENTORY MANAGEMENT</div>
+    <div class="card-body">
+        <button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#mdlCreateUpdate"><i class="fa fa-pencil"></i> New</button>
+    </div>
+    <div class="card ml-2 mr-2 mb-2 bg-light">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover small" id="tblInventory"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal Update Create*@
+<div class="modal fade" id="mdlCreateUpdate" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inventory</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ItemName" class="col-4 col-form-label">Item Description:</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

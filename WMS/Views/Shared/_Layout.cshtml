@@ -3,40 +3,66 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Warehouse Management System - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/bundles/DataTables-css")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+<body class="padding">
+    <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top padding">
+        <ul class="navbar-nav">
+            <li class="nav-item active padding">
+                <a class="nav-link" href="~/Inventory/Index"><b>Warehouse Management System</b><p class="text-center padding">MEGAWORLD CORPORATION</p></a>
+            </li>
+        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    @Html.ActionLink("Inventory", "Index", "Inventory", null, new { @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Warehouse", "Index", "Warehouse", null, new { @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Category", "Index", "Category", null, new { @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Subcategory", "Index", "Subcategory", null, new { @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Schedule", "Index", "Schedule", null, new { @class = "nav-link active" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("GenerateReport", "Index", "GenerateReport", null, new { @class = "nav-link active" })
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="dropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownAccount">
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="container body-content">
+    </nav>
+
+    <div class="container-fluid" style="margin-top:80px;">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - SYSTEMS MANAGEMENT</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/DataTables-js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

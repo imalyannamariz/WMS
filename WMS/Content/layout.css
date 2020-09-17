@@ -1,0 +1,20 @@
+﻿.padding {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin: 0px;
+}
+
+.ml-auto .dropdown-menu {
+    left: auto !important;
+    right: 0px;
+}
+
+nav {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+nav a.nav-link:hover {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 6px 0;
+}
