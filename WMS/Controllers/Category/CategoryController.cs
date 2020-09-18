@@ -15,9 +15,9 @@ namespace WMS.Controllers.Category
         }
 
         // GET: Category/Details/5
-        public ActionResult Details(int id)
+        public JsonResult GetRecord()
         {
-            return View();
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         // GET: Category/Create

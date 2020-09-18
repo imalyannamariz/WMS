@@ -19,7 +19,7 @@
     <div class="card ml-2 mr-2 mb-2 bg-light">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-striped table-hover small" id="tblInventory"></table>
+                <table class="table small table-striped table-hover" id="tblInventory"></table>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
 
 @*modal Update Create*@
 <div class="modal fade" id="mdlCreateUpdate" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Inventory</h5>
@@ -38,40 +38,88 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <label for="Category" class="col-3 col-form-label-sm">Category:</label>
                         <div class="col-9">
-                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                            <select class="custom-select custom-select-sm col-12" id="Category">
+                                <option selected>Category</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-4 col-form-label">Item Description:</label>
-                        <div class="col-8">
-                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                        <label for="SubCategory" class="col-3 col-form-label-sm">SubCategory:</label>
+                        <div class="col-9">
+                            <select class="custom-select custom-select-sm col-12" id="SubCategory">
+                                <option selected>SubCategory</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <label for="Location" class="col-3 col-form-label-sm">Location:</label>
                         <div class="col-9">
-                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                            <select class="custom-select custom-select-sm col-12" id="Location">
+                                <option selected>Location</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <label for="ItemName" class="col-3 col-form-label-sm">Item Name:</label>
                         <div class="col-9">
-                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                            <input type="text" class="form-control form-control-sm col-12" id="ItemName" placeholder="Item Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label">Item Name:</label>
+                        <label for="ItemName" class="col-3 col-form-label-sm">Item Description:</label>
                         <div class="col-9">
-                            <input type="text" class="form-control col-12" id="ItemName" placeholder="Item Name">
+                            <textarea type="text" class="form-control form-control-sm col-12" id="ItemDescription" placeholder="Item Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Stocks" class="col-1 col-form-label-sm">Stocks:</label>
+                        <div class="col-5">
+                            <input type="text" class="form-control form-control-sm col-12" id="Stocks" placeholder="Stocks">
+                        </div>
+                        <label for="UsedStocks" class="col-2 col-form-label-sm">Used Stocks:</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control form-control-sm col-12" id="UsedStocks" placeholder="Used Stocks">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Unit" class="col-1 col-form-label-sm">Unit:</label>
+                        <div class="col-5">
+                            <input type="text" class="form-control form-control-sm col-12" id="Unit" placeholder="Unit">
+                        </div>
+                        <label for="MaterialCode" class="col-2 col-form-label-sm">Material Code:</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control form-control-sm col-12" id="MaterialCode" placeholder="Material Code">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Origin" class="col-1 col-form-label-sm">Origin:</label>
+                        <div class="col-5">
+                            <input type="text" class="form-control form-control-sm col-12" id="Origin" placeholder="Origin">
+                        </div>
+                        <label for="MISNo" class="col-2 col-form-label-sm">MIS No:</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control form-control-sm col-12" id="MISNo" placeholder="MIS No">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ReceivedDate" class="col-3 col-form-label-sm">Received Date:</label>
+                        <div class="col-9">
+                            <input type="text" class="form-control form-control-sm col-12" id="ReceivedDate" placeholder="Received Date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Remarks" class="col-3 col-form-label-sm">Remarks:</label>
+                        <div class="col-9">
+                            <textarea type="text" class="form-control form-control-sm col-12" id="Remarks" placeholder="Remarks"></textarea>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" id="Submit">
+                </div>
             </div>
         </div>
     </div>

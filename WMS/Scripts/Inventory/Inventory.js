@@ -14,7 +14,12 @@
             }
         },
         fnRowCallback: function (nRow, aData, iDisplayIndex) {
-           
+            $('#btnEdit', nRow).off().on('click', function (e) {
+                var table = $('#tblInventory').DataTable();
+                var row = table.row($(this).closest('tr')).data();
+
+                $('#mdlCreateUpdate').modal('show');
+            });
         },
         columns: [
             {
@@ -110,11 +115,11 @@
             {
                 "title": "Action",
                 "render": function () {
-                    var btnEdit = $('<button id="btnEdit" class="btn btn-primary btn-sm"  style="font-size: 0.8em;"  type="button" title="Edit Record">');
-                    btnEdit.append('<i class="fa fa-trash-o"></i></button>');
+                    var btnEdit = $('<button id="btnEdit" class="btn btn-primary btn-sm" style="font-size: 0.8em;" type="button" title="Edit Record">');
+                    btnEdit.append('<i class="fa fa-pencil-square-o"></i></button>');
 
                     var btnDelete = $('<button id="btnDelete" class="btn btn-primary btn-sm" style="font-size: 0.8em;" type="button" title="Delete Record">');
-                    btnDelete.append('<i class="fa fa-pencil-square-o fa-1"></i></button>');
+                    btnDelete.append('<i class="fa fa-trash-o"></i></button>');
 
                     return btnEdit.prop('outerHTML') + ' ' + btnDelete.prop('outerHTML');
                 }

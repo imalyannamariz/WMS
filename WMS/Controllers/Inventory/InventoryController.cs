@@ -22,7 +22,7 @@ namespace WMS.Controllers.Inventory
         public JsonResult GetRecord()
         {
             try {
-                using (var context = new WMSEntities())
+                using (WMSEntities context = new WMSEntities())
                 {
                     var record = from A in context.View_Inventory 
                                  join B in context.View_Category

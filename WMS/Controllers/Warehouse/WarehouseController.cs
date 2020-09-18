@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WMS.DataAccess.Models;
+using WMS.Models.Warehouse;
 
 namespace WMS.Controllers.Warehouse
 {
@@ -15,73 +17,125 @@ namespace WMS.Controllers.Warehouse
         }
 
         // GET: Warehouse/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Warehouse/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Warehouse/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public JsonResult GetRecord()
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                using (WMSEntities context = new WMSEntities()) {
+                    var query = from warehouse in context.View_Location select warehouse;
+                    return Json(query.ToList(), JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            catch (Exception e) {
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }            
         }
 
-        // GET: Warehouse/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Warehouse/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: Warehouse/GetRowDetails
+        public JsonResult GetRowDetails(int WarehouseID)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var query = from warehouse in context.View_Location where warehouse.WarehouseID == WarehouseID select warehouse;
+                    return Json(query.FirstOrDefault(), JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 
+        // POST: Warehouse/CreateUpdate
+        [HttpPost]
+        public ActionResult CreateUpdate(WarehouseModel x)
+        {
+            try
+            {
+                using (WMSEntities context = new WMSEntities())
+                {
+                    if (x.Mode == 1)
+                    {
+                        var query = context.Locations.FirstOrDefault(b => b.WarehouseID == x.WarehouseID);
+                        query.WarehouseName = x.WarehouseName;
+                        query.WarehouseAddress = x.WarehouseAddress;
+                        //query.ModifiedBy = x.ModifiedBy;
+                        query.ModifiedDate = DateTime.Now.ToString("yyyy"+ "-"+"MM"+"-"+"dd"+" "+"HH"+":"+"mm"+":"+"ss");
+                        
+                        context.SaveChanges();
+                        TempData["message"] = "Success!";
+                        return RedirectToAction("Index");
+                    }
+                    else 
+                    {
+                        var checker = context.Locations.FirstOrDefault(b => b.WarehouseName == x.WarehouseName);
+
+                        if (checker == null)
+                        {
+                            Location query = new Location()
+                            {
+                                WarehouseName = x.WarehouseName,
+                                WarehouseAddress = x.WarehouseAddress,
+                                //query.CreatedBy = Session();
+                                CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
+                                IsDeleted = false
+                            };
+
+                            context.Locations.Add(query);
+                            context.SaveChanges();
+                            TempData["message"] = "Success!";
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["message"] = "Data Already Exist!";
+                            return RedirectToAction("Index");
+                        }
+                    }                    
+                }
+            }
+            catch (Exception e)
+            {
+                Response.Write(e);
+                return View();
+            }
+        }
+        
         // GET: Warehouse/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult GetDelete(WarehouseModel x)
         {
-            return View();
+            using (WMSEntities context = new WMSEntities())
+            {
+                var query = from warehouse in context.View_Location where warehouse.WarehouseID == x.WarehouseID select warehouse;
+                return Json(query.FirstOrDefault(), JsonRequestBehavior.AllowGet);
+            }            
         }
 
         // POST: Warehouse/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(WarehouseModel x)
         {
             try
             {
-                // TODO: Add delete logic here
+                using (WMSEntities context = new WMSEntities()) {
 
-                return RedirectToAction("Index");
+                    var query = context.Locations.FirstOrDefault(b => b.WarehouseID == x.WarehouseID);
+                    query.IsDeleted = true;
+                    //query.DeletedBy = x.DeletedBy;
+                    query.DeletedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss"));
+
+                    context.SaveChanges();
+                    TempData["message"] = "Success!";
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception e)
             {
+                Response.Write(e);
                 return View();
             }
         }
