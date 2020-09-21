@@ -31,9 +31,9 @@ namespace WMS.Models.Inventory
         public string DeletedDate { get; set; }
         public string msg { get; set; }
 
-        public IEnumerable<Location> Locations { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<SubCategory> Subcategories { get; set; }
+        //public IEnumerable<Location> Locations { get; set; }
+        //public IEnumerable<Category> Categories { get; set; }
+        //public IEnumerable<SubCategory> Subcategories { get; set; }
 
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using WMS.DataAccess.Models;
+using WMS.Models.Subcategory;
 
 namespace WMS.Controllers.Subcategory
 {
@@ -11,16 +12,15 @@ namespace WMS.Controllers.Subcategory
         // GET: Subcategory
         public ActionResult Index()
         {
-            return View();
+            using (WMSEntities context = new WMSEntities())
+            {
+                var query = new SelectList(context.View_Category.ToList(), "CategoryID", "CategoryName");
+                ViewData["CategoryList"] = query;
+                return View();
+            }
         }
 
-        // GET: Subcategory/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Subcategory/Create
+        //GET: Subcategory/Create
         public ActionResult Create()
         {
             return View();
@@ -28,13 +28,24 @@ namespace WMS.Controllers.Subcategory
 
         // POST: Subcategory/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateUpdate(SubcategoryModel x)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                using (WMSEntities context = new WMSEntities()) {
+                    SubCategory query = new SubCategory() { 
+                        SubCategoryName = x.SubCategoryName,
+                        SubCategoryDescription = x.SubCategoryDescription,
+                        CategoryID = x.CategoryID,
+                        //CreatedBy = x.CreatedBy,
+                        CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
+                        IsDeleted = false
+                    };
+                    context.SubCategories.Add(query);
+                    context.SaveChanges();
+                    TempData["message"] = "Success!";
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {

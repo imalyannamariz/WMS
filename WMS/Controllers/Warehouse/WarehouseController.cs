@@ -16,7 +16,7 @@ namespace WMS.Controllers.Warehouse
             return View();
         }
 
-        // GET: Warehouse/Details/5
+        // GET: Warehouse/GetRecord/5
         public JsonResult GetRecord()
         {
             try

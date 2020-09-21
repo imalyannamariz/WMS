@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WMS.DataAccess.Models;
+using WMS.Models.Category;
 
 namespace WMS.Controllers.Category
 {
@@ -15,73 +17,130 @@ namespace WMS.Controllers.Category
         }
 
         // GET: Category/Details/5
-        public JsonResult GetRecord()
+        public JsonResult GetRecords()
         {
-            return Json("", JsonRequestBehavior.AllowGet);
+            try
+            {
+                using (WMSEntities context = new WMSEntities()) {
+                    var query = from x in context.View_Category select x;
+
+                    return Json(query.ToList(), JsonRequestBehavior.AllowGet);
+                }                
+            }
+            catch (Exception e) {
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Category/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Category/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public JsonResult GetRowDetails(int CategoryID)
         {
             try
             {
-                // TODO: Add insert logic here
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var query = from x in context.View_Category where x.CategoryID == CategoryID select x;
 
-                return RedirectToAction("Index");
+                    return Json(query.FirstOrDefault(), JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // GET: Category/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Category/Edit/5
+        // POST: Category/CreateUpdate
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult CreateUpdate(CategoryModel x)
         {
             try
             {
-                // TODO: Add update logic here
+                using (WMSEntities context = new WMSEntities()) {
+                    if (x.mode == 1)
+                    {
+                        var query = context.Categories.FirstOrDefault(m => m.CategoryID == x.CategoryID);
+                        query.CategoryName = x.CategoryName;
+                        query.CategoryDescription = x.CategoryDescription;
+                        //query.ModifiedBy = category.ModifiedBy;
+                        query.ModifiedDate = DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss");
 
-                return RedirectToAction("Index");
+                        context.SaveChanges();
+                        TempData["Message"] = "Success!";
+                        return RedirectToAction("Index");
+                    }
+                    else {
+                        var checker = context.Categories.FirstOrDefault(b => b.CategoryName == x.CategoryName);
+
+                        if (checker == null)
+                        {
+                            DataAccess.Models.Category query = new DataAccess.Models.Category()
+                            {
+                                CategoryName = x.CategoryName,
+                                CategoryDescription = x.CategoryDescription,
+                                //query.CreatedBy = Session();
+                                CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
+                                IsDeleted = false
+                            };
+
+                            context.Categories.Add(query);
+                            context.SaveChanges();
+                            TempData["message"] = "Success!";
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["message"] = "Data Already Exist!";
+                            return RedirectToAction("Index");
+                        }
+                    }                    
+                }                    
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
-        }
+        }              
 
         // GET: Category/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult GetDelete(int CategoryID)
         {
-            return View();
+            try
+            {
+                using (WMSEntities context = new WMSEntities()) {
+                    var query = from x in context.View_Category where x.CategoryID == CategoryID select x;
+
+                    return Json(query.FirstOrDefault(), JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e) {
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // POST: Category/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(CategoryModel x)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var query = context.Categories.FirstOrDefault(m=>m.CategoryID == x.CategoryID);
+                    query.IsDeleted = true;
+                    //query.DeletedBy = x.DeletedBy;
+                    query.DeletedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss"));
+                    context.SaveChanges();
+                    TempData["Message"] = "Success!";
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception e)
             {
+                Response.Write(e);
                 return View();
             }
         }

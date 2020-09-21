@@ -45,6 +45,10 @@ namespace WMS
             //Inventory
             bundles.Add(new ScriptBundle("~/bundles/Warehouse-js").Include(
                       "~/Scripts/Warehouse/Warehouse.js"));
+
+            //Inventory
+            bundles.Add(new ScriptBundle("~/bundles/Category-js").Include(
+                      "~/Scripts/Category/Category.js"));
         }
     }
 }
