@@ -14,7 +14,6 @@
             type: 'GET',
             dataSrc: '',
             complete: function (response, request) {
-
             }
         },
         fnRowCallback: function (nRow, aData, iDisplayIndex) {
@@ -25,13 +24,13 @@
                     url: GetRowDetails,
                     type: 'GET',
                     data: {
-                        CategoryID: row.CategoryID
+                        SubCategoryID: row.SubCategoryID
                     },
                     success: function (data) {
-                        $('#SubcategoryName').val(data.SubcategoryName);
-                        $('#SubcategoryDescription').val(data.SubcategoryDescription);
-                        $('#CategoryName').val(data.CategoryName);
-                        $('#SubcategoryID').val(data.SubcategoryID);
+                        $('#SubCategoryName').val(data.SubCategoryName);
+                        $('#SubCategoryDescription').val(data.SubCategoryDescription);
+                        $('#CategoryID').val(data.CategoryID);
+                        $('#SubCategoryID').val(data.SubCategoryID);
                         $('#mode').val(1);
                         $('#mdlCreateUpdate').modal('show');
                         $('#mdlCreateUpdate').on('hidden.bs.modal', function () {
@@ -64,16 +63,21 @@
         columns: [
             {
                 'title': 'Category ID',
-                'data': 'CategoryID',
+                'data': 'SubCategoryID',
                 'visible': false
             },
             {
-                'title': 'Category Name',
-                'data': 'CategoryName'
+                'title': 'Subcategory Name',
+                'data': 'SubCategoryName'
             },
             {
-                "title": "Category Description",
-                "data": "CategoryDescription",
+                "title": "Subcategory Description",
+                "data": "SubCategoryDescription",
+                "visible": true
+            },
+            {
+                "title": "Category Name",
+                "data": "CategoryName",
                 "visible": true
             },
             {

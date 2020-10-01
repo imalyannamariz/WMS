@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using WMS.DataAccess.Models;
@@ -8,13 +10,30 @@ namespace WMS.Models.Inventory
 {    
     public class InventoryModel
     {
+        [Required(ErrorMessage = "Category Name is required")]
+        [DisplayName("Category Name")]
         public int CategoryID { get; set; }
+
+
+        [DisplayName("Subcategory Name")]
         public int SubCategoryID { get; set; }
+
+
+        [Required(ErrorMessage = "Location Name is required")]
+        [DisplayName("Location Name")]
         public int WarehouseID { get; set; }
+
+
         public int ItemID { get; set; }
+
+        [Required(ErrorMessage = "Item Name is required")]
+        [DisplayName("Item Name")]
         public string ItemName { get; set; }
+
         public string ItemDescription { get; set; }
-        public int Stocks { get; set; }
+
+        [Required(ErrorMessage = "Stocks is required")]
+        public int Stocks { get; set; }        
         public int UsedStocks { get; set; }
         public string Unit { get; set; }
         public string MaterialCode { get; set; }
@@ -30,10 +49,6 @@ namespace WMS.Models.Inventory
         public string DeletedBy { get; set; }
         public string DeletedDate { get; set; }
         public string msg { get; set; }
-
-        //public IEnumerable<Location> Locations { get; set; }
-        //public IEnumerable<Category> Categories { get; set; }
-        //public IEnumerable<SubCategory> Subcategories { get; set; }
-
+        public int mode { get; set; }
     }
 }

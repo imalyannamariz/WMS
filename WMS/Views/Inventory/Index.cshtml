@@ -1,4 +1,4 @@
-﻿
+﻿@model WMS.Models.Inventory.InventoryModel
 @{
     ViewBag.Title = "Inventory";
 }
@@ -6,6 +6,9 @@
 @section scripts{
     <script type="text/javascript">
         var GetRecord = "@Url.Action("GetRecord", "Inventory")";
+        var SubcategoryOptions = "@Url.Action("SubcategoryOptions", "Inventory")";
+        var CreateUpdate = "@Url.Action("CreateUpdate", "Inventory")";
+        var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";
     </script>
 
     @Scripts.Render("~/bundles/Inventory-js");
@@ -18,7 +21,7 @@
     </div>
     <div class="card ml-2 mr-2 mb-2 bg-light">
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive table-responsive-sm">
                 <table class="table small table-striped table-hover" id="tblInventory"></table>
             </div>
         </div>
@@ -36,90 +39,94 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                @using (Html.BeginForm("CreateUpdate", "Inventory", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m => m.ItemID)
+                    @Html.HiddenFor(m => m.mode)
                     <div class="form-group row">
-                        <label for="Category" class="col-3 col-form-label-sm">Category:</label>
+                        @Html.LabelFor(m => m.CategoryID, new { @class = "c" +
+                       "ol-3 col-form-label-sm" })
                         <div class="col-9">
-                            <select class="custom-select custom-select-sm col-12" id="Category">
-                                <option selected>Category</option>
-                            </select>
+                            @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewData["CategoryList"], optionLabel: "Choose a Category", new { @class = "form-control form-control-sm col-12", @id = "CategoryID" })
+                            @Html.ValidationMessageFor(m => m.CategoryID)
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="SubCategory" class="col-3 col-form-label-sm">SubCategory:</label>
+                        @Html.LabelFor(m => m.SubCategoryID, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <select class="custom-select custom-select-sm col-12" id="SubCategory">
-                                <option selected>SubCategory</option>
-                            </select>
+                            @Html.DropDownListFor(m => m.SubCategoryID, Enumerable.Empty<SelectListItem>(), "Choose a Subcategory", new { @class = "form-control form-control-sm col-12", @id = "SubCategoryID" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Location" class="col-3 col-form-label-sm">Location:</label>
+                        @Html.LabelFor(m => m.WarehouseID, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <select class="custom-select custom-select-sm col-12" id="Location">
-                                <option selected>Location</option>
-                            </select>
+                            @Html.DropDownList("WarehouseID", (IEnumerable<SelectListItem>)ViewData["LocationList"], optionLabel: "Choose a Location", new { @class = "form-control form-control-sm col-12", @id = "WarehouseID" })
+                            @Html.ValidationMessageFor(m => m.WarehouseID)
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label-sm">Item Name:</label>
+                        @Html.LabelFor(m => m.ItemName, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <input type="text" class="form-control form-control-sm col-12" id="ItemName" placeholder="Item Name">
+                            @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control form-control-sm col-12", @id = "ItemName", @placeholder = "Item Name" })
+                            @Html.ValidationMessageFor(m => m.ItemName)
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ItemName" class="col-3 col-form-label-sm">Item Description:</label>
+                        @Html.LabelFor(m => m.ItemDescription, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <textarea type="text" class="form-control form-control-sm col-12" id="ItemDescription" placeholder="Item Description"></textarea>
+                            @Html.TextAreaFor(m => m.ItemDescription, new { @class = "form-control form-control-sm col-12", @id = "ItemDescription", @placeholder = "Item Description" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Stocks" class="col-1 col-form-label-sm">Stocks:</label>
+                        @Html.LabelFor(m => m.Stocks, new { @class = "col-1 col-form-label-sm" })
                         <div class="col-5">
-                            <input type="text" class="form-control form-control-sm col-12" id="Stocks" placeholder="Stocks">
+                            @Html.TextBoxFor(m => m.Stocks, new { @class = "form-control form-control-sm col-12", @id = "Stocks", @placeholder = "Stocks" })
+                            @Html.ValidationMessageFor(m => m.Stocks)
                         </div>
-                        <label for="UsedStocks" class="col-2 col-form-label-sm">Used Stocks:</label>
+                        @Html.LabelFor(m => m.UsedStocks, new { @class = "col-2 col-form-label-sm" })
                         <div class="col-4">
-                            <input type="text" class="form-control form-control-sm col-12" id="UsedStocks" placeholder="Used Stocks">
+                            @Html.TextBoxFor(m => m.UsedStocks, new { @class = "form-control form-control-sm col-12", @id = "UsedStocks", @placeholder = "Used Stocks" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Unit" class="col-1 col-form-label-sm">Unit:</label>
+                        @Html.LabelFor(m => m.Unit, new { @class = "col-1 col-form-label-sm" })
                         <div class="col-5">
-                            <input type="text" class="form-control form-control-sm col-12" id="Unit" placeholder="Unit">
+                            @Html.TextBoxFor(m => m.Unit, new { @class = "form-control form-control-sm col-12", @id = "Unit", @placeholder = "Unit" })
                         </div>
-                        <label for="MaterialCode" class="col-2 col-form-label-sm">Material Code:</label>
+                        @Html.LabelFor(m => m.MaterialCode, new { @class = "col-2 col-form-label-sm" })
                         <div class="col-4">
-                            <input type="text" class="form-control form-control-sm col-12" id="MaterialCode" placeholder="Material Code">
+                            @Html.TextBoxFor(m => m.MaterialCode, new { @class = "form-control form-control-sm col-12", @id = "MaterialCode", @placeholder = "Material Code" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Origin" class="col-1 col-form-label-sm">Origin:</label>
+                        @Html.LabelFor(m => m.Origin, new { @class = "col-1 col-form-label-sm" })
                         <div class="col-5">
-                            <input type="text" class="form-control form-control-sm col-12" id="Origin" placeholder="Origin">
+                            @Html.TextBoxFor(m => m.Origin, new { @class = "form-control form-control-sm col-12", @id = "Origin", @placeholder = "Origin" })
                         </div>
-                        <label for="MISNo" class="col-2 col-form-label-sm">MIS No:</label>
+                        @Html.LabelFor(m => m.MISNo, new { @class = "col-2 col-form-label-sm" })
                         <div class="col-4">
-                            <input type="text" class="form-control form-control-sm col-12" id="MISNo" placeholder="MIS No">
+                            @Html.TextBoxFor(m => m.MISNo, new { @class = "form-control form-control-sm col-12", @id = "MISNo", @placeholder = "MIS No" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="ReceivedDate" class="col-3 col-form-label-sm">Received Date:</label>
+                        @Html.LabelFor(m => m.ReceivedDate, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <input type="text" class="form-control form-control-sm col-12" id="ReceivedDate" placeholder="Received Date">
+                            @Html.TextBoxFor(m => m.ReceivedDate, new { @type = "date", @class = "form-control form-control-sm col-12", @id = "ReceivedDate", @placeholder = "Received Date" })
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Remarks" class="col-3 col-form-label-sm">Remarks:</label>
+                        @Html.LabelFor(m => m.Remarks, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            <textarea type="text" class="form-control form-control-sm col-12" id="Remarks" placeholder="Remarks"></textarea>
+                            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control form-control-sm col-12", @id = "Remarks", @placeholder = "Remarks" })
                         </div>
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" id="Submit">
-                </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" id="Submit">
+                    </div>
+                }
             </div>
         </div>
     </div>

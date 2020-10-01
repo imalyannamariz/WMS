@@ -18,7 +18,7 @@ namespace WMS
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
@@ -42,13 +42,17 @@ namespace WMS
             bundles.Add(new ScriptBundle("~/bundles/Inventory-js").Include(
                       "~/Scripts/Inventory/Inventory.js"));
 
-            //Inventory
+            //Warehouse
             bundles.Add(new ScriptBundle("~/bundles/Warehouse-js").Include(
                       "~/Scripts/Warehouse/Warehouse.js"));
 
-            //Inventory
+            //Category
             bundles.Add(new ScriptBundle("~/bundles/Category-js").Include(
                       "~/Scripts/Category/Category.js"));
+
+            //Subcategory
+            bundles.Add(new ScriptBundle("~/bundles/Subcategory-js").Include(
+                      "~/Scripts/Subcategory/Subcategory.js"));
         }
     }
 }
