@@ -45,10 +45,7 @@
                         var date = data.ReceivedDate;
                         var result = date.split('-');
                         var newDate = (result[0] + '-' + result[1] + '-' + result[2].substring(0, 2));
-
-                        console.log(data.CategoryID);
-                        console.log(data.CategoryName);
-                        
+                                                
                         $('#CategoryID option:selected').val(data.CategoryID).text(data.CategoryName);
                         $('#SubCategoryID option:selected').val(data.SubCategoryID).text(data.SubCategoryName); 
                         $('#WarehouseID option:selected').val(data.WarehouseID).text(data.WarehouseName);   

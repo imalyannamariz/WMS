@@ -186,12 +186,12 @@ namespace WMS.Controllers.Inventory
                                 ItemDescription = x.ItemDescription,
                                 Stocks = x.Stocks,
                                 UsedStocks = x.UsedStocks,
-                                Unit = x.Unit,
+                                Unit = String.IsNullOrEmpty(x.Unit) ? "" : x.Unit,
                                 MaterialCode = x.MaterialCode,
-                                Origin = x.Origin,
+                                Origin = String.IsNullOrEmpty(x.Origin) ? "" : x.Origin,
                                 MISNo = x.MISNo,
                                 ReceivedDate = Convert.ToDateTime(x.ReceivedDate),
-                                Remarks = x.Remarks,
+                                Remarks = String.IsNullOrEmpty(x.Remarks) ? "" : x.Remarks,
                                 //CreatedBy = "",
                                 CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
                                 IsDeleted = false
@@ -205,7 +205,7 @@ namespace WMS.Controllers.Inventory
             }
             catch (Exception e)
             {
-                Response.Write(e);
+                Response.Output.Write(e);
                 return RedirectToAction("Index");
             }
         }

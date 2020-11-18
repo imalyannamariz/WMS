@@ -8,7 +8,27 @@
         var GetRecord = "@Url.Action("GetRecord", "Inventory")";
         var SubcategoryOptions = "@Url.Action("SubcategoryOptions", "Inventory")";
         var CreateUpdate = "@Url.Action("CreateUpdate", "Inventory")";
-        var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";
+        var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";   
+
+        //function ReceivedDate() {
+        //    var d = new Date();
+        //    var today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+        //    $('#ReceivedDate').val(today);
+        //}
+
+        $('#InventoryForm').submit(function () {
+            if ($('#UsedStocks').val() == '') {
+                $('#UsedStocks').val(0);
+            }
+
+             if ($('#MaterialCode').val() == '') {
+                $('#MaterialCode').val(0);
+            }
+
+            if ($('#MISNo').val() == '') {
+                $('#MISNo').val(0);
+            }              
+        });
     </script>
 
     @Scripts.Render("~/bundles/Inventory-js");
@@ -39,14 +59,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("CreateUpdate", "Inventory", FormMethod.Post))
+                @using (Html.BeginForm("CreateUpdate", "Inventory", FormMethod.Post,  new { id = "InventoryForm" }))
                 {
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.ItemID)
                     @Html.HiddenFor(m => m.mode)
+                    
                     <div class="form-group row">
-                        @Html.LabelFor(m => m.CategoryID, new { @class = "c" +
-                       "ol-3 col-form-label-sm" })
+                        @Html.LabelFor(m => m.CategoryID, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
                             @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewData["CategoryList"], optionLabel: "Choose a Category", new { @class = "form-control form-control-sm col-12", @id = "CategoryID" })
                             @Html.ValidationMessageFor(m => m.CategoryID)
@@ -76,6 +96,7 @@
                         @Html.LabelFor(m => m.ItemDescription, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
                             @Html.TextAreaFor(m => m.ItemDescription, new { @class = "form-control form-control-sm col-12", @id = "ItemDescription", @placeholder = "Item Description" })
+                            @Html.ValidationMessageFor(m => m.ItemDescription)
                         </div>
                     </div>
                     <div class="form-group row">
@@ -112,7 +133,7 @@
                     <div class="form-group row">
                         @Html.LabelFor(m => m.ReceivedDate, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            @Html.TextBoxFor(m => m.ReceivedDate, new { @type = "date", @class = "form-control form-control-sm col-12", @id = "ReceivedDate", @placeholder = "Received Date" })
+                            @Html.TextBoxFor(m => m.ReceivedDate, new {@type = "date", @class = "form-control form-control-sm col-12", @id = "ReceivedDate", @placeholder = "Received Date"})
                         </div>
                     </div>
                     <div class="form-group row">

@@ -7,7 +7,7 @@ using System.Web;
 using WMS.DataAccess.Models;
 
 namespace WMS.Models.Inventory
-{    
+{
     public class InventoryModel
     {
         [Required(ErrorMessage = "Category Name is required")]
@@ -30,15 +30,22 @@ namespace WMS.Models.Inventory
         [DisplayName("Item Name")]
         public string ItemName { get; set; }
 
+        [DisplayName("Item Description")]
         public string ItemDescription { get; set; }
 
         [Required(ErrorMessage = "Stocks is required")]
-        public int Stocks { get; set; }        
+        public int Stocks { get; set; }
+
+        [DisplayName("Used Stocks")]
         public int UsedStocks { get; set; }
         public string Unit { get; set; }
+
+        [DisplayName("Material Code")]
         public string MaterialCode { get; set; }
         public long MISNo { get; set; }
         public string Origin { get; set; }
+
+        [DisplayName("Received Date")]
         public string ReceivedDate { get; set; }
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }
