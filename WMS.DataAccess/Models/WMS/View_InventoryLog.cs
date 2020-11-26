@@ -12,29 +12,29 @@ namespace WMS.DataAccess.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class InventoryLog
+    public partial class View_InventoryLog
     {
-        public int LogID { get; set; }
         public int CategoryID { get; set; }
         public int WarehouseID { get; set; }
         public int ItemID { get; set; }
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
-        public Nullable<int> Stocks { get; set; }
-        public Nullable<int> UsedStocks { get; set; }
-        public Nullable<int> ReservedStocks { get; set; }
+        public int Stocks { get; set; }
+        public int UsedStocks { get; set; }
+        public int ReservedStocks { get; set; }
+        public int AvailableStocks { get; set; }
         public string Unit { get; set; }
         public string MaterialCode { get; set; }
-        public Nullable<long> MISNo { get; set; }
+        public long MISNo { get; set; }
         public string Origin { get; set; }
-        public Nullable<System.DateTime> ReceivedDate { get; set; }
+        public string ReceivedDate { get; set; }
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public string ModifiedDate { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
         public string DeletedBy { get; set; }
-        public Nullable<System.DateTime> DeletedDate { get; set; }
+        public string DeletedDate { get; set; }
     }
 }

@@ -49,6 +49,7 @@ namespace WMS.Controllers.Inventory
                                      A.ItemDescription,
                                      A.Stocks,
                                      A.UsedStocks,
+                                     A.ReservedStocks,
                                      A.AvailableStocks,
                                      A.Unit,
                                      A.MISNo,
@@ -96,6 +97,7 @@ namespace WMS.Controllers.Inventory
                                      A.ItemDescription,
                                      A.Stocks,
                                      A.UsedStocks,
+                                     A.ReservedStocks,
                                      A.Unit,
                                      A.MISNo,
                                      A.MaterialCode,
@@ -132,12 +134,22 @@ namespace WMS.Controllers.Inventory
                     if (x.mode == 1)
                     {
                         DataAccess.Models.Inventory query = context.Inventories.FirstOrDefault(m => m.ItemID == x.ItemID);
-                        if (x.UsedStocks > x.Stocks) 
+                        if ((x.UsedStocks + x.ReservedStocks) > x.Stocks) 
+                        {
+                            TempData["message"] = "Used/Reserved Stocks cannot be greater than Stocks.";
+                            return RedirectToAction("Index");
+                        }
+                        else if (x.UsedStocks > x.Stocks)
                         {
                             TempData["message"] = "Used Stocks cannot be greater than Stocks.";
                             return RedirectToAction("Index");
-                        } 
-                        else 
+                        }
+                        else if (x.ReservedStocks > x.Stocks)
+                        {
+                            TempData["message"] = "Reserved Stocks cannot be greater than Stocks.";
+                            return RedirectToAction("Index");
+                        }
+                        else
                         {
                             query.CategoryID = x.CategoryID;
                             query.WarehouseID = x.WarehouseID;
@@ -145,6 +157,7 @@ namespace WMS.Controllers.Inventory
                             query.ItemDescription = x.ItemDescription;
                             query.Stocks = x.Stocks;
                             query.UsedStocks = x.UsedStocks;
+                            query.ReservedStocks = x.ReservedStocks;
                             query.Unit = x.Unit;
                             query.MaterialCode = x.MaterialCode;
                             query.Origin = x.Origin;
@@ -170,7 +183,12 @@ namespace WMS.Controllers.Inventory
                                 TempData["message"] = "Used Stocks cannot be greater than Stocks.";
                                 return RedirectToAction("Index");
                             }
-                            else 
+                            else if (x.ReservedStocks > x.Stocks) 
+                            {
+                                TempData["message"] = "Reserved Stocks cannot be greater than Stocks.";
+                                return RedirectToAction("Index");
+                            }
+                            else
                             {
                                 DataAccess.Models.Inventory model = new DataAccess.Models.Inventory()
                                 {
@@ -180,6 +198,7 @@ namespace WMS.Controllers.Inventory
                                     ItemDescription = x.ItemDescription,
                                     Stocks = x.Stocks,
                                     UsedStocks = x.UsedStocks,
+                                    ReservedStocks = x.ReservedStocks,
                                     Unit = String.IsNullOrEmpty(x.Unit) ? "" : x.Unit,
                                     MaterialCode = x.MaterialCode,
                                     Origin = String.IsNullOrEmpty(x.Origin) ? "" : x.Origin,
@@ -205,6 +224,58 @@ namespace WMS.Controllers.Inventory
             {
                 Response.Output.Write(e);
                 return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Inventory/GetHistory
+        public JsonResult GetHistory(int ItemID)
+        {
+            try
+            {
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var record = from A in context.View_InventoryLog
+                                 join B in context.View_Category
+                                 on A.CategoryID equals B.CategoryID
+                                 join D in context.View_Location
+                                 on A.WarehouseID equals D.WarehouseID
+                                 select new
+                                 {
+                                     B.CategoryID,
+                                     B.CategoryName,
+                                     D.WarehouseID,
+                                     D.WarehouseName,
+                                     A.ItemID,
+                                     A.ItemName,
+                                     A.ItemDescription,
+                                     A.Stocks,
+                                     A.UsedStocks,
+                                     A.ReservedStocks,
+                                     A.AvailableStocks,
+                                     A.Unit,
+                                     A.MISNo,
+                                     A.MaterialCode,
+                                     A.Origin,
+                                     A.ReceivedDate,
+                                     A.Remarks,
+                                     A.CreatedBy,
+                                     A.CreatedDate,
+                                     A.ModifiedBy,
+                                     A.ModifiedDate,
+                                     A.DeletedBy,
+                                     A.DeletedDate
+                                 };
+
+                    var result = record.Where(m => m.ItemID == ItemID).ToList();
+                    return Json(result, JsonRequestBehavior.AllowGet);
+
+                }
+            }
+            catch (Exception e)
+            {
+                InventoryModel model = new InventoryModel();
+                model.msg = Convert.ToString(e);
+                return Json(model.msg, JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -32,5 +32,6 @@ namespace WMS.DataAccess.Models
         public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<InventoryLog> InventoryLogs { get; set; }
         public virtual DbSet<View_Inventory> View_Inventory { get; set; }
+        public virtual DbSet<View_InventoryLog> View_InventoryLog { get; set; }
     }
 }

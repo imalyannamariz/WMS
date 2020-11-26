@@ -21,6 +21,7 @@ namespace WMS.DataAccess.Models
         public string ItemDescription { get; set; }
         public Nullable<int> Stocks { get; set; }
         public Nullable<int> UsedStocks { get; set; }
+        public Nullable<int> ReservedStocks { get; set; }
         public string Unit { get; set; }
         public string MaterialCode { get; set; }
         public Nullable<long> MISNo { get; set; }

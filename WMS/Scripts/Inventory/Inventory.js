@@ -50,6 +50,7 @@
                         $('#ItemDescription').val(data.ItemDescription);
                         $('#Stocks').val(data.Stocks);
                         $('#UsedStocks').val(data.UsedStocks);
+                        $('#ReservedStocks').val(data.ReservedStocks);
                         $('#Unit').val(data.Unit);
                         $('#MaterialCode').val(data.MaterialCode);
                         $('#Origin').val(data.Origin);
@@ -84,6 +85,14 @@
                     }
                 });
             });
+            
+            $('#btnHistory', nRow).off().on('click', function (e) {
+                var table = $('#tblInventory').DataTable();
+                row = table.row($(this).closest('tr')).data();
+
+                fnHistory(row.ItemID);
+                $('#mdlHistory').modal('show');
+            });
         },
         columns: [
             {
@@ -99,17 +108,17 @@
             {
                 "title": "Item Description",
                 "data": "ItemDescription",
-                "width": "15%"
+                "width": "14%"
             },
             {
                 "title": "Warehouse",
                 "data": "WarehouseName",
-                "width": "10%"
+                "width": "8%"
             },
             {
                 "title": "Category",
                 "data": "CategoryName",
-                "width": "10%"
+                "width": "8%"
             },
             {
                 "title": "Material Code",
@@ -127,8 +136,7 @@
                 "title": "Origin",
                 "data": "Origin",
                 "visible": true,
-                "width": "8%",
-                "visible": false
+                "width": "5%",
             },
             {
                 "title": "Received Date",
@@ -139,27 +147,34 @@
                 "title": "Stocks",
                 "data": "Stocks",
                 "width": "5%",
+                "visible": false
             },
             {
                 "title": "Used Stocks",
                 "data": "UsedStocks",
-                //"width": "5%",
+                "width": "6%",
+                "visible": false
+            },
+            {
+                "title": "Reserved Stocks",
+                "data": "ReservedStocks",
+                "width": "8%",
             },
             {
                 "title": "Avail. Stocks",
-                "data": "AvailableStocks",                
-                //"width": "20%"
+                "data": "AvailableStocks",
+                "width": "7%"
             },
             {
                 "title": "Created By",
                 "data": "CreatedBy",
-                "width": "10%",
+                "width": "8%",
                 "visible": false
             },
             {
                 "title": "Created Date",
                 "data": "CreatedDate",
-                "width": "10%",
+                "width": "8%",
                 "visible": true
             },
             {
@@ -176,7 +191,7 @@
             {
                 "title": "Remarks",
                 "data": "Remarks",
-                "width": "15%"
+                "width": "14%"
             },
             {
                 "title": "DELETED BY",
@@ -190,16 +205,128 @@
             },
             {
                 "title": "Action",
+                "width": "7%",
                 "render": function () {
+                    var btnHistory = $('<button id="btnHistory" class="btn btn-primary btn-sm" style="font-size: 0.8em;" type="button" title="View History">');
+                    btnHistory.append('<i class="fa fa-search"></i></button>');
+
                     var btnEdit = $('<button id="btnEdit" class="btn btn-primary btn-sm" style="font-size: 0.8em;" type="button" title="Edit Record">');
                     btnEdit.append('<i class="fa fa-pencil-square-o"></i></button>');
 
                     var btnDelete = $('<button id="btnDelete" class="btn btn-primary btn-sm" style="font-size: 0.8em;" type="button" title="Delete Record">');
                     btnDelete.append('<i class="fa fa-trash-o"></i></button>');
 
-                    return btnEdit.prop('outerHTML') + ' ' + btnDelete.prop('outerHTML');
+                    return btnHistory.prop('outerHTML') + ' ' + btnEdit.prop('outerHTML') + ' ' + btnDelete.prop('outerHTML');
                 }
             }
         ]
     });
+
+    fnHistory = function (x) {
+        $('#tblHistory').DataTable({
+            destroy: true,
+            searching: true,
+            pageLength: 20,
+            order: [17, 'desc'],
+            dom: 'ftp',
+            ajax: {
+                url: GetHistory,
+                type: 'GET',
+                data: {
+                    ItemID: x
+                },
+                dataSrc: '',
+                complete: function (response, request) {
+                    //console
+                }
+            },
+            fnRowCallback: function (nRow, aData, iDisplayIndex) {
+
+            },
+            columns: [
+                {
+                    "title": "Item ID",
+                    "data": "ItemID",
+                    "visible": false
+                },
+                {
+                    "title": "Item Name",
+                    "data": "ItemName"
+                },
+                {
+                    "title": "Item Description",
+                    "data": "ItemDescription"
+                },
+                {
+                    "title": "Warehouse",
+                    "data": "WarehouseName"
+                },
+                {
+                    "title": "Category",
+                    "data": "CategoryName"
+                },
+                {
+                    "title": "Material Code",
+                    "data": "MaterialCode",
+                    "visible": false
+                },
+                {
+                    "title": "MIS No",
+                    "data": "MISNo",
+                    "visible": true
+                },
+                {
+                    "title": "Origin",
+                    "data": "Origin",
+                    "visible": true
+                },
+                {
+                    "title": "Received Date",
+                    "data": "ReceivedDate",
+                    "visible": false
+                },
+                {
+                    "title": "Stocks",
+                    "data": "Stocks"
+                },
+                {
+                    "title": "Used Stocks",
+                    "data": "UsedStocks"
+                },
+                {
+                    "title": "Reserved Stocks",
+                    "data": "ReservedStocks"
+                },
+                {
+                    "title": "Avail. Stocks",
+                    "data": "AvailableStocks"
+                },
+                {
+                    "title": "Remarks",
+                    "data": "Remarks",
+                    "width": "14%"
+                },
+                {
+                    "title": "Created By",
+                    "data": "CreatedBy",
+                    "visible": false
+                },
+                {
+                    "title": "Created Date",
+                    "data": "CreatedDate",
+                    "visible": false
+                },
+                {
+                    "title": "Modified By",
+                    "data": "ModifiedBy",
+                    "visible": false
+                },
+                {
+                    "title": "Modified Date",
+                    "data": "ModifiedDate",
+                    "visible": true
+                }
+            ]
+        });
+    }
 });

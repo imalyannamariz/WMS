@@ -8,11 +8,16 @@
         var GetRecord = "@Url.Action("GetRecord", "Inventory")";
         var CreateUpdate = "@Url.Action("CreateUpdate", "Inventory")";
         var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";
-        var GetDelete = "@Url.Action("GetDelete", "Inventory")"
+        var GetDelete = "@Url.Action("GetDelete", "Inventory")";
+        var GetHistory = "@Url.Action("GetHistory", "Inventory")"
 
         $('#InventoryForm').submit(function () {
             if ($('#UsedStocks').val() == '') {
                 $('#UsedStocks').val(0);
+            }
+
+            if ($('#ReservedStocks').val() == '') {
+                $('#ReservedStocks').val(0);
             }
 
              if ($('#MaterialCode').val() == '') {
@@ -103,13 +108,17 @@
                     </div>
                     <div class="form-group row">
                         @Html.LabelFor(m => m.Stocks, new { @class = "col-1 col-form-label-sm" })
-                        <div class="col-5">
+                        <div class="col-2">
                             @Html.TextBoxFor(m => m.Stocks, new { @class = "form-control form-control-sm col-12", @id = "Stocks", @placeholder = "Stocks", @type = "number" })
                             @Html.ValidationMessageFor(m => m.Stocks)
                         </div>
-                        @Html.LabelFor(m => m.UsedStocks, new { @class = "col-2 col-form-label-sm" })
-                        <div class="col-4">
+                        @Html.LabelFor(m => m.UsedStocks, new { @class = "col-1.5 col-form-label-sm" })
+                        <div class="col-3">
                             @Html.TextBoxFor(m => m.UsedStocks, new { @class = "form-control form-control-sm col-12", @id = "UsedStocks", @placeholder = "Used Stocks", @type = "number" })
+                        </div>
+                        @Html.LabelFor(m => m.ReservedStocks, new { @class = "col-2 col-form-label-sm" })
+                        <div class="col-2.5">
+                            @Html.TextBoxFor(m => m.ReservedStocks, new { @class = "form-control form-control-sm col-12", @id = "ReservedStocks", @placeholder = "Reserved Stocks", @type = "number" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -168,7 +177,7 @@
             <div class="modal-body">
                 @using (Html.BeginForm("Delete", "Inventory", FormMethod.Post))
                 {
-                    @Html.HiddenFor(m => m.ItemID, new { @id = "ItemID"})
+                    @Html.HiddenFor(m => m.ItemID, new { @id = "ItemID" })
                     <p>Do you really want to delete this row? This process cannot be undone.</p>
 
                     <div class="modal-footer">
@@ -180,6 +189,32 @@
         </div>
     </div>
 </div>
+
+
+@*modal VIEW HISTORY*@
+<div class="modal fade" id="mdlHistory" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inventory History</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card ml-2 mr-2 mb-2 bg-light">
+                    <div class="card-body">
+                        <div class="table-responsive table-responsive-sm">
+                            <table class="table small table-striped table-hover" id="tblHistory"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 

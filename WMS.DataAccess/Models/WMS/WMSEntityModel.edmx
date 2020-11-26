@@ -31,6 +31,7 @@
           <Property Name="ItemDescription" Type="varchar(max)" />
           <Property Name="Stocks" Type="int" />
           <Property Name="UsedStocks" Type="int" />
+          <Property Name="ReservedStocks" Type="int" />
           <Property Name="Unit" Type="varchar" MaxLength="50" />
           <Property Name="MaterialCode" Type="varchar" MaxLength="50" />
           <Property Name="MISNo" Type="bigint" />
@@ -57,6 +58,7 @@
           <Property Name="ItemDescription" Type="varchar(max)" />
           <Property Name="Stocks" Type="int" />
           <Property Name="UsedStocks" Type="int" />
+          <Property Name="ReservedStocks" Type="int" />
           <Property Name="Unit" Type="varchar" MaxLength="50" />
           <Property Name="MaterialCode" Type="varchar" MaxLength="50" />
           <Property Name="MISNo" Type="bigint" />
@@ -123,6 +125,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Inventory' does
             <PropertyRef Name="ItemDescription" />
             <PropertyRef Name="Stocks" />
             <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="ReservedStocks" />
             <PropertyRef Name="AvailableStocks" />
             <PropertyRef Name="Unit" />
             <PropertyRef Name="MaterialCode" />
@@ -145,6 +148,57 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Inventory' does
           <Property Name="ItemDescription" Type="varchar(max)" Nullable="false" />
           <Property Name="Stocks" Type="int" Nullable="false" />
           <Property Name="UsedStocks" Type="int" Nullable="false" />
+          <Property Name="ReservedStocks" Type="int" Nullable="false" />
+          <Property Name="AvailableStocks" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaterialCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MISNo" Type="bigint" Nullable="false" />
+          <Property Name="Origin" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ReceivedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedBy" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DeletedDate" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_InventoryLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_InventoryLog">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="ItemName" />
+            <PropertyRef Name="ItemDescription" />
+            <PropertyRef Name="Stocks" />
+            <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="ReservedStocks" />
+            <PropertyRef Name="AvailableStocks" />
+            <PropertyRef Name="Unit" />
+            <PropertyRef Name="MaterialCode" />
+            <PropertyRef Name="MISNo" />
+            <PropertyRef Name="Origin" />
+            <PropertyRef Name="ReceivedDate" />
+            <PropertyRef Name="Remarks" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ItemDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="Stocks" Type="int" Nullable="false" />
+          <Property Name="UsedStocks" Type="int" Nullable="false" />
+          <Property Name="ReservedStocks" Type="int" Nullable="false" />
           <Property Name="AvailableStocks" Type="int" Nullable="false" />
           <Property Name="Unit" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="MaterialCode" Type="varchar" MaxLength="50" Nullable="false" />
@@ -238,6 +292,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
     [View_Inventory].[ItemDescription] AS [ItemDescription], 
     [View_Inventory].[Stocks] AS [Stocks], 
     [View_Inventory].[UsedStocks] AS [UsedStocks], 
+    [View_Inventory].[ReservedStocks] AS [ReservedStocks], 
     [View_Inventory].[AvailableStocks] AS [AvailableStocks], 
     [View_Inventory].[Unit] AS [Unit], 
     [View_Inventory].[MaterialCode] AS [MaterialCode], 
@@ -253,6 +308,32 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
     [View_Inventory].[DeletedBy] AS [DeletedBy], 
     [View_Inventory].[DeletedDate] AS [DeletedDate]
     FROM [dbo].[View_Inventory] AS [View_Inventory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_InventoryLog" EntityType="Self.View_InventoryLog" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_InventoryLog].[CategoryID] AS [CategoryID], 
+    [View_InventoryLog].[WarehouseID] AS [WarehouseID], 
+    [View_InventoryLog].[ItemID] AS [ItemID], 
+    [View_InventoryLog].[ItemName] AS [ItemName], 
+    [View_InventoryLog].[ItemDescription] AS [ItemDescription], 
+    [View_InventoryLog].[Stocks] AS [Stocks], 
+    [View_InventoryLog].[UsedStocks] AS [UsedStocks], 
+    [View_InventoryLog].[ReservedStocks] AS [ReservedStocks], 
+    [View_InventoryLog].[AvailableStocks] AS [AvailableStocks], 
+    [View_InventoryLog].[Unit] AS [Unit], 
+    [View_InventoryLog].[MaterialCode] AS [MaterialCode], 
+    [View_InventoryLog].[MISNo] AS [MISNo], 
+    [View_InventoryLog].[Origin] AS [Origin], 
+    [View_InventoryLog].[ReceivedDate] AS [ReceivedDate], 
+    [View_InventoryLog].[Remarks] AS [Remarks], 
+    [View_InventoryLog].[CreatedBy] AS [CreatedBy], 
+    [View_InventoryLog].[CreatedDate] AS [CreatedDate], 
+    [View_InventoryLog].[ModifiedBy] AS [ModifiedBy], 
+    [View_InventoryLog].[ModifiedDate] AS [ModifiedDate], 
+    [View_InventoryLog].[IsDeleted] AS [IsDeleted], 
+    [View_InventoryLog].[DeletedBy] AS [DeletedBy], 
+    [View_InventoryLog].[DeletedDate] AS [DeletedDate]
+    FROM [dbo].[View_InventoryLog] AS [View_InventoryLog]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_Location" EntityType="Self.View_Location" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -297,6 +378,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
             <End Role="Inventory" EntitySet="Inventories" />
           </AssociationSet>
           <EntitySet Name="View_Inventory" EntityType="WarehouseManagementSystemModel.View_Inventory" />
+          <EntitySet Name="View_InventoryLog" EntityType="WarehouseManagementSystemModel.View_InventoryLog" />
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -389,6 +471,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
           <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Stocks" Type="Int32" />
           <Property Name="UsedStocks" Type="Int32" />
+          <Property Name="ReservedStocks" Type="Int32" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MaterialCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MISNo" Type="Int64" />
@@ -417,6 +500,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
           <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Stocks" Type="Int32" />
           <Property Name="UsedStocks" Type="Int32" />
+          <Property Name="ReservedStocks" Type="Int32" />
           <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MaterialCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MISNo" Type="Int64" />
@@ -464,6 +548,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
             <PropertyRef Name="ItemDescription" />
             <PropertyRef Name="Stocks" />
             <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="ReservedStocks" />
             <PropertyRef Name="AvailableStocks" />
             <PropertyRef Name="Unit" />
             <PropertyRef Name="MaterialCode" />
@@ -486,6 +571,55 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
           <Property Name="ItemDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Stocks" Type="Int32" Nullable="false" />
           <Property Name="UsedStocks" Type="Int32" Nullable="false" />
+          <Property Name="ReservedStocks" Type="Int32" Nullable="false" />
+          <Property Name="AvailableStocks" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MISNo" Type="Int64" Nullable="false" />
+          <Property Name="Origin" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ReceivedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_InventoryLog">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+            <PropertyRef Name="WarehouseID" />
+            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="ItemName" />
+            <PropertyRef Name="ItemDescription" />
+            <PropertyRef Name="Stocks" />
+            <PropertyRef Name="UsedStocks" />
+            <PropertyRef Name="ReservedStocks" />
+            <PropertyRef Name="AvailableStocks" />
+            <PropertyRef Name="Unit" />
+            <PropertyRef Name="MaterialCode" />
+            <PropertyRef Name="MISNo" />
+            <PropertyRef Name="Origin" />
+            <PropertyRef Name="ReceivedDate" />
+            <PropertyRef Name="Remarks" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="DeletedBy" />
+            <PropertyRef Name="DeletedDate" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Stocks" Type="Int32" Nullable="false" />
+          <Property Name="UsedStocks" Type="Int32" Nullable="false" />
+          <Property Name="ReservedStocks" Type="Int32" Nullable="false" />
           <Property Name="AvailableStocks" Type="Int32" Nullable="false" />
           <Property Name="Unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MaterialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -587,6 +721,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
                 <ScalarProperty Name="MISNo" ColumnName="MISNo" />
                 <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ReservedStocks" ColumnName="ReservedStocks" />
                 <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
                 <ScalarProperty Name="Stocks" ColumnName="Stocks" />
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
@@ -613,6 +748,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
                 <ScalarProperty Name="MISNo" ColumnName="MISNo" />
                 <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ReservedStocks" ColumnName="ReservedStocks" />
                 <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
                 <ScalarProperty Name="Stocks" ColumnName="Stocks" />
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
@@ -641,6 +777,35 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
                 <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="AvailableStocks" ColumnName="AvailableStocks" />
+                <ScalarProperty Name="ReservedStocks" ColumnName="ReservedStocks" />
+                <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
+                <ScalarProperty Name="Stocks" ColumnName="Stocks" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_InventoryLog">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_InventoryLog">
+              <MappingFragment StoreEntitySet="View_InventoryLog">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="MISNo" ColumnName="MISNo" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="AvailableStocks" ColumnName="AvailableStocks" />
+                <ScalarProperty Name="ReservedStocks" ColumnName="ReservedStocks" />
                 <ScalarProperty Name="UsedStocks" ColumnName="UsedStocks" />
                 <ScalarProperty Name="Stocks" ColumnName="Stocks" />
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />

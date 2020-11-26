@@ -21,6 +21,7 @@ namespace WMS.DataAccess.Models
         public string ItemDescription { get; set; }
         public int Stocks { get; set; }
         public int UsedStocks { get; set; }
+        public int ReservedStocks { get; set; }
         public int AvailableStocks { get; set; }
         public string Unit { get; set; }
         public string MaterialCode { get; set; }

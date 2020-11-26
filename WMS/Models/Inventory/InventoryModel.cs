@@ -17,8 +17,7 @@ namespace WMS.Models.Inventory
         [Required(ErrorMessage = "Location Name is required")]
         [DisplayName("Location Name")]
         public int WarehouseID { get; set; }
-
-
+        
         public int ItemID { get; set; }
 
         [Required(ErrorMessage = "Item Name is required")]
@@ -33,6 +32,9 @@ namespace WMS.Models.Inventory
 
         [DisplayName("Used Stocks")]
         public int UsedStocks { get; set; }
+
+        [DisplayName("Reserved Stocks")]
+        public int ReservedStocks { get; set; }
         public int AvailableStocks { get; set; }
         public string Unit { get; set; }
 
