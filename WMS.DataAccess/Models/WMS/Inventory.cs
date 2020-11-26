@@ -15,7 +15,6 @@ namespace WMS.DataAccess.Models
     public partial class Inventory
     {
         public Nullable<int> CategoryID { get; set; }
-        public Nullable<int> SubCategoryID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public int ItemID { get; set; }
         public string ItemName { get; set; }
@@ -38,6 +37,5 @@ namespace WMS.DataAccess.Models
     
         public virtual Category Category { get; set; }
         public virtual Location Location { get; set; }
-        public virtual SubCategory SubCategory { get; set; }
     }
 }

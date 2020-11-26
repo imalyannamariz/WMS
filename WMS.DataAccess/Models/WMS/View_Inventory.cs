@@ -15,13 +15,13 @@ namespace WMS.DataAccess.Models
     public partial class View_Inventory
     {
         public int CategoryID { get; set; }
-        public int SubCategoryID { get; set; }
         public int WarehouseID { get; set; }
         public int ItemID { get; set; }
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
         public int Stocks { get; set; }
         public int UsedStocks { get; set; }
+        public int AvailableStocks { get; set; }
         public string Unit { get; set; }
         public string MaterialCode { get; set; }
         public long MISNo { get; set; }

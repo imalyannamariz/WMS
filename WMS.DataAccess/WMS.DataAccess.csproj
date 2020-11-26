@@ -115,10 +115,10 @@
     <Compile Include="Models\WMS\Inventory.cs">
       <DependentUpon>WMSEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WMS\Location.cs">
+    <Compile Include="Models\WMS\InventoryLog.cs">
       <DependentUpon>WMSEntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WMS\SubCategory.cs">
+    <Compile Include="Models\WMS\Location.cs">
       <DependentUpon>WMSEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WMS\View_Category.cs">
@@ -128,9 +128,6 @@
       <DependentUpon>WMSEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WMS\View_Location.cs">
-      <DependentUpon>WMSEntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WMS\View_Subcategory.cs">
       <DependentUpon>WMSEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WMS\WMSEntityModel.Context.cs">
@@ -153,7 +150,6 @@
   <ItemGroup>
     <EntityDeploy Include="Models\WMS\WMSEntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WMSEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\WMS\WMSEntityModel.edmx.diagram">
       <DependentUpon>WMSEntityModel.edmx</DependentUpon>

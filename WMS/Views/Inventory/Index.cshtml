@@ -6,15 +6,9 @@
 @section scripts{
     <script type="text/javascript">
         var GetRecord = "@Url.Action("GetRecord", "Inventory")";
-        var SubcategoryOptions = "@Url.Action("SubcategoryOptions", "Inventory")";
         var CreateUpdate = "@Url.Action("CreateUpdate", "Inventory")";
-        var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";   
-
-        //function ReceivedDate() {
-        //    var d = new Date();
-        //    var today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-        //    $('#ReceivedDate').val(today);
-        //}
+        var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";
+        var GetDelete = "@Url.Action("GetDelete", "Inventory")"
 
         $('#InventoryForm').submit(function () {
             if ($('#UsedStocks').val() == '') {
@@ -27,17 +21,31 @@
 
             if ($('#MISNo').val() == '') {
                 $('#MISNo').val(0);
-            }              
+            }
         });
     </script>
 
     @Scripts.Render("~/bundles/Inventory-js");
 }
 
+@{
+    if (TempData["message"] != null)
+    {
+        if (Convert.ToString(TempData["message"]) == "Success!")
+        {
+            <div class="alert alert-success text-center" role="alert">@TempData["message"]</div>
+        }
+        else
+        {
+            <div class="alert alert-danger text-center" role="alert">@TempData["message"]</div>
+        }
+    }
+}
+
 <div class="card ">
     <div class="card-header">INVENTORY MANAGEMENT</div>
     <div class="card-body">
-        <button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#mdlCreateUpdate"><i class="fa fa-pencil"></i> New</button>
+        <button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#mdlCreateUpdate" id="btnNew"><i class="fa fa-pencil"></i> New</button>
     </div>
     <div class="card ml-2 mr-2 mb-2 bg-light">
         <div class="card-body">
@@ -59,23 +67,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("CreateUpdate", "Inventory", FormMethod.Post,  new { id = "InventoryForm" }))
+                @using (Html.BeginForm("CreateUpdate", "Inventory", FormMethod.Post, new { id = "InventoryForm" }))
                 {
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.ItemID)
                     @Html.HiddenFor(m => m.mode)
-                    
+
                     <div class="form-group row">
                         @Html.LabelFor(m => m.CategoryID, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
                             @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewData["CategoryList"], optionLabel: "Choose a Category", new { @class = "form-control form-control-sm col-12", @id = "CategoryID" })
                             @Html.ValidationMessageFor(m => m.CategoryID)
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        @Html.LabelFor(m => m.SubCategoryID, new { @class = "col-3 col-form-label-sm" })
-                        <div class="col-9">
-                            @Html.DropDownListFor(m => m.SubCategoryID, Enumerable.Empty<SelectListItem>(), "Choose a Subcategory", new { @class = "form-control form-control-sm col-12", @id = "SubCategoryID" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -102,12 +104,12 @@
                     <div class="form-group row">
                         @Html.LabelFor(m => m.Stocks, new { @class = "col-1 col-form-label-sm" })
                         <div class="col-5">
-                            @Html.TextBoxFor(m => m.Stocks, new { @class = "form-control form-control-sm col-12", @id = "Stocks", @placeholder = "Stocks" })
+                            @Html.TextBoxFor(m => m.Stocks, new { @class = "form-control form-control-sm col-12", @id = "Stocks", @placeholder = "Stocks", @type = "number" })
                             @Html.ValidationMessageFor(m => m.Stocks)
                         </div>
                         @Html.LabelFor(m => m.UsedStocks, new { @class = "col-2 col-form-label-sm" })
                         <div class="col-4">
-                            @Html.TextBoxFor(m => m.UsedStocks, new { @class = "form-control form-control-sm col-12", @id = "UsedStocks", @placeholder = "Used Stocks" })
+                            @Html.TextBoxFor(m => m.UsedStocks, new { @class = "form-control form-control-sm col-12", @id = "UsedStocks", @placeholder = "Used Stocks", @type = "number" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -127,13 +129,13 @@
                         </div>
                         @Html.LabelFor(m => m.MISNo, new { @class = "col-2 col-form-label-sm" })
                         <div class="col-4">
-                            @Html.TextBoxFor(m => m.MISNo, new { @class = "form-control form-control-sm col-12", @id = "MISNo", @placeholder = "MIS No" })
+                            @Html.TextBoxFor(m => m.MISNo, new { @class = "form-control form-control-sm col-12", @id = "MISNo", @placeholder = "MIS No", @type = "number" })
                         </div>
                     </div>
                     <div class="form-group row">
                         @Html.LabelFor(m => m.ReceivedDate, new { @class = "col-3 col-form-label-sm" })
                         <div class="col-9">
-                            @Html.TextBoxFor(m => m.ReceivedDate, new {@type = "date", @class = "form-control form-control-sm col-12", @id = "ReceivedDate", @placeholder = "Received Date"})
+                            @Html.TextBoxFor(m => m.ReceivedDate, new { @type = "date", @class = "form-control form-control-sm col-12", @id = "ReceivedDate", @placeholder = "Received Date" })
                         </div>
                     </div>
                     <div class="form-group row">
@@ -146,6 +148,32 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <input type="submit" class="btn btn-primary" id="Submit">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal to DELETE*@
+<div id="mdlDelete" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "Inventory", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.ItemID, new { @id = "ItemID"})
+                    <p>Do you really want to delete this row? This process cannot be undone.</p>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-danger" id="DeleteConfirmed">
                     </div>
                 }
             </div>

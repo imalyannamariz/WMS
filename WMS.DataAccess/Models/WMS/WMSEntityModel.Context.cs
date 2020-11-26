@@ -26,12 +26,11 @@ namespace WMS.DataAccess.Models
         }
     
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<View_Category> View_Category { get; set; }
-        public virtual DbSet<View_Inventory> View_Inventory { get; set; }
         public virtual DbSet<View_Location> View_Location { get; set; }
-        public virtual DbSet<View_Subcategory> View_Subcategory { get; set; }
+        public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<InventoryLog> InventoryLogs { get; set; }
+        public virtual DbSet<View_Inventory> View_Inventory { get; set; }
     }
 }

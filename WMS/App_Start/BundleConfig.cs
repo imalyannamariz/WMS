@@ -49,10 +49,6 @@ namespace WMS
             //Category
             bundles.Add(new ScriptBundle("~/bundles/Category-js").Include(
                       "~/Scripts/Category/Category.js"));
-
-            //Subcategory
-            bundles.Add(new ScriptBundle("~/bundles/Subcategory-js").Include(
-                      "~/Scripts/Subcategory/Subcategory.js"));
         }
     }
 }

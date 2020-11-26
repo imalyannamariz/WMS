@@ -12,18 +12,22 @@ namespace WMS.DataAccess.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SubCategory
+    public partial class InventoryLog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubCategory()
-        {
-            this.Inventories = new HashSet<Inventory>();
-        }
-    
-        public int SubCategoryID { get; set; }
-        public string SubCategoryName { get; set; }
-        public string SubCategoryDescription { get; set; }
-        public Nullable<int> CategoryID { get; set; }
+        public int LogID { get; set; }
+        public int CategoryID { get; set; }
+        public int WarehouseID { get; set; }
+        public int ItemID { get; set; }
+        public string ItemName { get; set; }
+        public string ItemDescription { get; set; }
+        public Nullable<int> Stocks { get; set; }
+        public Nullable<int> UsedStocks { get; set; }
+        public string Unit { get; set; }
+        public string MaterialCode { get; set; }
+        public Nullable<long> MISNo { get; set; }
+        public string Origin { get; set; }
+        public Nullable<System.DateTime> ReceivedDate { get; set; }
+        public string Remarks { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -31,9 +35,5 @@ namespace WMS.DataAccess.Models
         public Nullable<bool> IsDeleted { get; set; }
         public string DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-    
-        public virtual Category Category { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

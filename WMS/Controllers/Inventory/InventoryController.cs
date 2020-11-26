@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using WMS.DataAccess.Models;
 using WMS.Models.Inventory;
-using WMS.Models.Subcategory;
 using WMS.ViewModels;
 
 namespace WMS.Controllers.Inventory
@@ -21,25 +20,13 @@ namespace WMS.Controllers.Inventory
             {
                 var category = new SelectList(context.View_Category.ToList(), "CategoryID", "CategoryName");
                 ViewData["CategoryList"] = category;
-
-                //var query = new SelectList(context.View_Subcategory.Where().ToList(), "CategoryID", "CategoryName");
-                //ViewData["SubCategoryList"] = "Select Subcategory";
-
+                
                 var location = new SelectList(context.View_Location.ToList(), "WarehouseID", "WarehouseName");
                 ViewData["LocationList"] = location;
                 return View();
             }
         }
-
-        public JsonResult SubcategoryOptions(int CategoryID)
-        {
-            using (WMSEntities context = new WMSEntities())
-            {
-                var query = from x in context.View_Subcategory where x.CategoryID == CategoryID select new {x.SubCategoryID, x.SubCategoryName };
-                return Json(query.ToList(), JsonRequestBehavior.AllowGet);
-            }
-        }
-
+        
         // GET: Inventory/Details/5
         public JsonResult GetRecord()
         {
@@ -49,16 +36,12 @@ namespace WMS.Controllers.Inventory
                     var record = from A in context.View_Inventory 
                                  join B in context.View_Category
                                  on A.CategoryID equals B.CategoryID
-                                 join C in context.View_Subcategory
-                                 on A.SubCategoryID equals C.SubCategoryID
                                  join D in context.View_Location
                                  on A.WarehouseID equals D.WarehouseID
                                  select new
                                  {
                                      B.CategoryID,
                                      B.CategoryName,
-                                     C.SubCategoryID,
-                                     C.SubCategoryName,
                                      D.WarehouseID,
                                      D.WarehouseName,
                                      A.ItemID,
@@ -66,6 +49,7 @@ namespace WMS.Controllers.Inventory
                                      A.ItemDescription,
                                      A.Stocks,
                                      A.UsedStocks,
+                                     A.AvailableStocks,
                                      A.Unit,
                                      A.MISNo,
                                      A.MaterialCode,
@@ -99,16 +83,12 @@ namespace WMS.Controllers.Inventory
                     var record = from A in context.View_Inventory
                                  join B in context.View_Category
                                  on A.CategoryID equals B.CategoryID
-                                 join C in context.View_Subcategory
-                                 on A.SubCategoryID equals C.SubCategoryID
                                  join D in context.View_Location
                                  on A.WarehouseID equals D.WarehouseID
                                  select new
                                  {
                                      B.CategoryID,
                                      B.CategoryName,
-                                     C.SubCategoryID,
-                                     C.SubCategoryName,
                                      D.WarehouseID,
                                      D.WarehouseName,
                                      A.ItemID,
@@ -152,24 +132,32 @@ namespace WMS.Controllers.Inventory
                     if (x.mode == 1)
                     {
                         DataAccess.Models.Inventory query = context.Inventories.FirstOrDefault(m => m.ItemID == x.ItemID);
-                        query.CategoryID = x.CategoryID;
-                        query.SubCategoryID = x.SubCategoryID;
-                        query.WarehouseID = x.WarehouseID;
-                        query.ItemName = x.ItemName;
-                        query.ItemDescription = x.ItemDescription;
-                        query.Stocks = x.Stocks;
-                        query.UsedStocks = x.UsedStocks;
-                        query.Unit = x.Unit;
-                        query.MaterialCode = x.MaterialCode;
-                        query.Origin = x.Origin;
-                        query.MISNo = x.MISNo;
-                        query.ReceivedDate = Convert.ToDateTime(x.ReceivedDate);
-                        query.Remarks = x.Remarks;
-                        //query.ModifiedBy = "";
-                        query.ModifiedDate = DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss");
+                        if (x.UsedStocks > x.Stocks) 
+                        {
+                            TempData["message"] = "Used Stocks cannot be greater than Stocks.";
+                            return RedirectToAction("Index");
+                        } 
+                        else 
+                        {
+                            query.CategoryID = x.CategoryID;
+                            query.WarehouseID = x.WarehouseID;
+                            query.ItemName = x.ItemName;
+                            query.ItemDescription = x.ItemDescription;
+                            query.Stocks = x.Stocks;
+                            query.UsedStocks = x.UsedStocks;
+                            query.Unit = x.Unit;
+                            query.MaterialCode = x.MaterialCode;
+                            query.Origin = x.Origin;
+                            query.MISNo = x.MISNo;
+                            query.ReceivedDate = Convert.ToDateTime(x.ReceivedDate);
+                            query.Remarks = x.Remarks;
+                            //query.ModifiedBy = "";
+                            query.ModifiedDate = DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss");
 
-                        context.SaveChanges();
-                        return RedirectToAction("Index");
+                            context.SaveChanges();
+                            TempData["message"] = "Success!";
+                            return RedirectToAction("Index");
+                        }                        
                     }
                     else
                     {
@@ -177,28 +165,38 @@ namespace WMS.Controllers.Inventory
 
                         if (checker == null)
                         {
-                            DataAccess.Models.Inventory model = new DataAccess.Models.Inventory()
+                            if (x.UsedStocks > x.Stocks)
                             {
-                                CategoryID = x.CategoryID,
-                                SubCategoryID = x.SubCategoryID,
-                                WarehouseID = x.WarehouseID,
-                                ItemName = x.ItemName,
-                                ItemDescription = x.ItemDescription,
-                                Stocks = x.Stocks,
-                                UsedStocks = x.UsedStocks,
-                                Unit = String.IsNullOrEmpty(x.Unit) ? "" : x.Unit,
-                                MaterialCode = x.MaterialCode,
-                                Origin = String.IsNullOrEmpty(x.Origin) ? "" : x.Origin,
-                                MISNo = x.MISNo,
-                                ReceivedDate = Convert.ToDateTime(x.ReceivedDate),
-                                Remarks = String.IsNullOrEmpty(x.Remarks) ? "" : x.Remarks,
-                                //CreatedBy = "",
-                                CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
-                                IsDeleted = false
-                            };
-                            context.Inventories.Add(model);
-                            context.SaveChanges();
+                                TempData["message"] = "Used Stocks cannot be greater than Stocks.";
+                                return RedirectToAction("Index");
+                            }
+                            else 
+                            {
+                                DataAccess.Models.Inventory model = new DataAccess.Models.Inventory()
+                                {
+                                    CategoryID = x.CategoryID,
+                                    WarehouseID = x.WarehouseID,
+                                    ItemName = x.ItemName,
+                                    ItemDescription = x.ItemDescription,
+                                    Stocks = x.Stocks,
+                                    UsedStocks = x.UsedStocks,
+                                    Unit = String.IsNullOrEmpty(x.Unit) ? "" : x.Unit,
+                                    MaterialCode = x.MaterialCode,
+                                    Origin = String.IsNullOrEmpty(x.Origin) ? "" : x.Origin,
+                                    MISNo = x.MISNo,
+                                    ReceivedDate = Convert.ToDateTime(x.ReceivedDate),
+                                    Remarks = String.IsNullOrEmpty(x.Remarks) ? "" : x.Remarks,
+                                    //CreatedBy = "",
+                                    CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss")),
+                                    IsDeleted = false
+                                };
+                                context.Inventories.Add(model);
+                                context.SaveChanges();
+                                TempData["message"] = "Success!";
+                                return RedirectToAction("Index");
+                            }                            
                         }
+                        TempData["message"] = "Data Already Exist!";
                         return RedirectToAction("Index");
                     }
                 }
@@ -210,46 +208,45 @@ namespace WMS.Controllers.Inventory
             }
         }
 
-        // GET: Inventory/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: Category/Delete/5
+        public JsonResult GetDelete(int ItemID)
         {
             try
             {
-                // TODO: Add update logic here
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var query = from x in context.View_Inventory where x.ItemID == ItemID select x;
 
-                return RedirectToAction("Index");
+                    return Json(query.FirstOrDefault(), JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                Response.Write(e);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // GET: Inventory/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/Delete/5
+        // POST: Category/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(InventoryModel x)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                using (WMSEntities context = new WMSEntities())
+                {
+                    var query = context.Inventories.FirstOrDefault(m => m.ItemID == x.ItemID);
+                    query.IsDeleted = true;
+                    //query.DeletedBy = x.DeletedBy;
+                    query.DeletedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy" + "-" + "MM" + "-" + "dd" + " " + "HH" + ":" + "mm" + ":" + "ss"));
+                    context.SaveChanges();
+                    TempData["Message"] = "Success!";
+                    return RedirectToAction("Index");
+                }
             }
-            catch
+            catch (Exception e)
             {
+                Response.Write(e);
                 return View();
             }
         }

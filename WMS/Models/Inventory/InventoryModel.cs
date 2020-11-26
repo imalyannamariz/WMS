@@ -12,12 +12,7 @@ namespace WMS.Models.Inventory
     {
         [Required(ErrorMessage = "Category Name is required")]
         [DisplayName("Category Name")]
-        public int CategoryID { get; set; }
-
-
-        [DisplayName("Subcategory Name")]
-        public int SubCategoryID { get; set; }
-
+        public int CategoryID { get; set; }        
 
         [Required(ErrorMessage = "Location Name is required")]
         [DisplayName("Location Name")]
@@ -38,6 +33,7 @@ namespace WMS.Models.Inventory
 
         [DisplayName("Used Stocks")]
         public int UsedStocks { get; set; }
+        public int AvailableStocks { get; set; }
         public string Unit { get; set; }
 
         [DisplayName("Material Code")]

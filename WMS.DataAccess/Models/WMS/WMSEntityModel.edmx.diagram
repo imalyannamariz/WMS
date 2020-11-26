@@ -6,17 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="1c1f5ae23c574dff916e5be87db010a8" Name="Diagram1">
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.Category" Width="1.5" PointX="0.625" PointY="0.625" />
-        <EntityTypeShape EntityType="WarehouseManagementSystemModel.Inventory" Width="1.5" PointX="3.5" PointY="0.5" />
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.Location" Width="1.5" PointX="5.875" PointY="0.5" />
-        <EntityTypeShape EntityType="WarehouseManagementSystemModel.SubCategory" Width="1.5" PointX="0.625" PointY="4.875" />
-        <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Category" />
-        <AssociationConnector Association="WarehouseManagementSystemModel.FK_SubCategory_Category" />
-        <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Location" />
-        <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_SubCategory" />
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Category" Width="1.5" PointX="6.375" PointY="4.75" />
-        <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Inventory" Width="1.5" PointX="3.375" PointY="7.75" />
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Location" Width="1.5" PointX="8.375" PointY="0.75" />
-        <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Subcategory" Width="1.5" PointX="8.375" PointY="4.75" />
+        <EntityTypeShape EntityType="WarehouseManagementSystemModel.Inventory" Width="1.5" PointX="3.125" PointY="0.5" />
+        <EntityTypeShape EntityType="WarehouseManagementSystemModel.InventoryLog" Width="1.5" PointX="0.625" PointY="4.125" />
+        <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Category" />
+        <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Location" />
+        <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Inventory" Width="1.5" PointX="8.375" PointY="4.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
