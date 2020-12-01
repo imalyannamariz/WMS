@@ -13,8 +13,8 @@
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.InventoryLog" Width="1.5" PointX="0.75" PointY="6.125" />
         <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Category" />
         <AssociationConnector Association="WarehouseManagementSystemModel.FK_Inventory_Location" />
-        <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Inventory" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_InventoryLog" Width="1.75" PointX="8.375" PointY="4.75" />
+        <EntityTypeShape EntityType="WarehouseManagementSystemModel.View_Inventory" Width="1.5" PointX="3.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

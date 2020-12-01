@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+    $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+        $(".alert").slideUp(500);
+    });
+
     $('#btnNew').on('click', function () {
         //for options default value
         var test = $('#CategoryID').find('option:selected').text('Choose a Category').val(0);

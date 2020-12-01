@@ -157,7 +157,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Inventory' does
           <Property Name="ReceivedDate" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Remarks" Type="varchar(max)" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="CreatedDate" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="ModifiedDate" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -377,8 +377,8 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
             <End Role="Location" EntitySet="Locations" />
             <End Role="Inventory" EntitySet="Inventories" />
           </AssociationSet>
-          <EntitySet Name="View_Inventory" EntityType="WarehouseManagementSystemModel.View_Inventory" />
           <EntitySet Name="View_InventoryLog" EntityType="WarehouseManagementSystemModel.View_InventoryLog" />
+          <EntitySet Name="View_Inventory" EntityType="WarehouseManagementSystemModel.View_Inventory" />
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -539,7 +539,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="View_Inventory">
+        <EntityType Name="View_InventoryLog">
           <Key>
             <PropertyRef Name="CategoryID" />
             <PropertyRef Name="WarehouseID" />
@@ -587,7 +587,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
           <Property Name="DeletedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="DeletedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="View_InventoryLog">
+        <EntityType Name="View_Inventory">
           <Key>
             <PropertyRef Name="CategoryID" />
             <PropertyRef Name="WarehouseID" />
@@ -628,7 +628,7 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
           <Property Name="ReceivedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Remarks" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
@@ -760,9 +760,9 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="View_Inventory">
-            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Inventory">
-              <MappingFragment StoreEntitySet="View_Inventory">
+          <EntitySetMapping Name="View_InventoryLog">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_InventoryLog">
+              <MappingFragment StoreEntitySet="View_InventoryLog">
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -788,9 +788,9 @@ warning 6002: The table/view 'WarehouseManagementSystem.dbo.View_Location' does 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="View_InventoryLog">
-            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_InventoryLog">
-              <MappingFragment StoreEntitySet="View_InventoryLog">
+          <EntitySetMapping Name="View_Inventory">
+            <EntityTypeMapping TypeName="WarehouseManagementSystemModel.View_Inventory">
+              <MappingFragment StoreEntitySet="View_Inventory">
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

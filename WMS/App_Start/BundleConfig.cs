@@ -49,6 +49,12 @@ namespace WMS
             //Category
             bundles.Add(new ScriptBundle("~/bundles/Category-js").Include(
                       "~/Scripts/Category/Category.js"));
+
+            //Report
+            bundles.Add(new ScriptBundle("~/bundles/Report-js").Include(
+                        "~/Scripts/jquery.dateFormat-1.0.js",
+                      "~/Scripts/Report/Report.js"
+                       ));
         }
     }
 }

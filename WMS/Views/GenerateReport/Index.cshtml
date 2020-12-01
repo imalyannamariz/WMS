@@ -1,7 +1,77 @@
-﻿
+﻿@model WMS.Models.Report.ReportModel
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Generate Report</h2>
+@section scripts{
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/jquery.dateFormat-1.0.js"></script>
+    <script type="text/javascript">
+        var ShowRecord = "@Url.Action("Report", "GenerateReport")";
+
+        $('#CategoryID').append('<option selected value="0">Choose a Category</option>');
+        $('#WarehouseID').append('<option selected value="0">Choose a Warehouse Location</option>');
+    </script>
+
+    @Scripts.Render("~/bundles/Report-js");
+}
+
+
+@{
+    if (TempData["message"] != null)
+    {
+        if (Convert.ToString(TempData["message"]) == "Success!")
+        {
+            <div class="alert alert-success text-center" role="alert">@TempData["message"]</div>
+        }
+        else
+        {
+            <div class="alert alert-danger text-center" role="alert">@TempData["message"]</div>
+        }
+    }
+}
+
+<div class="card ">
+    <div class="card-header">GENERATE REPORT</div>
+    <div class="card-body">
+        <form id="formReport" method="get">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group row justify-content-center">
+                        @Html.LabelFor(m => m.CategoryID, new { @class = "col-1.5 col-form-label-sm" })
+                        <div class="col-3">
+                            @Html.DropDownList("CategoryID", (IEnumerable<SelectListItem>)ViewData["CategoryList"], new { @class = "form-control form-control-sm col-12", @id = "CategoryID" })
+                        </div>
+                        @Html.LabelFor(m => m.WarehouseID, new { @class = "col-1.5 col-form-label-sm" })
+                        <div class="col-3">
+                            @Html.DropDownList("WarehouseID", (IEnumerable<SelectListItem>)ViewData["LocationList"], new { @class = "form-control form-control-sm col-12", @id = "WarehouseID" })
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        @Html.LabelFor(m => m.StartDate, new { @class = "col-1.5 col-form-label-sm" })
+                        <div class="col-3">
+                            @Html.TextBoxFor(m => m.StartDate, new { @type = "date", @class = "form-control form-control-sm col-12", @id = "StartDate", @placeholder = "Start Date" })
+                        </div>
+                        @Html.LabelFor(m => m.EndDate, new { @class = "col-1.5 col-form-label-sm" })
+                        <div class="col-3">
+                            @Html.TextBoxFor(m => m.EndDate, new { @type = "date", @class = "form-control form-control-sm col-12", @id = "EndDate", @placeholder = "End Date" })
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <button type="button" id="btnShow" class="btn btn-primary btn-sm m-1">Show Record</button>
+                        <button type="button" id="btnExport" class="btn btn-primary btn-sm m-1">Export Record</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card ml-2 mr-2 mb-2 bg-light">
+        <div class="card-body">
+            <div class="table-responsive table-responsive-sm">
+                <table class="table small table-striped table-hover" id="tblReport"></table>
+            </div>
+        </div>
+    </div>
+</div>
 
