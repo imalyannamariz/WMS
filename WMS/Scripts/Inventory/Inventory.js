@@ -95,6 +95,7 @@
                 row = table.row($(this).closest('tr')).data();
 
                 fnHistory(row.ItemID);
+                var x = $('#hItemID').val(row.ItemID);
                 $('#mdlHistory').modal('show');
             });
         },
@@ -179,7 +180,11 @@
                 "title": "Created Date",
                 "data": "CreatedDate",
                 "width": "8%",
-                "visible": true
+                "visible": true,
+                "render": function (data) {
+                    var date = new Date(parseInt(data.substr(6)));
+                    return $.format.date(date, "yyyy/MM/dd hh:mm:ss a")
+                },
             },
             {
                 "title": "Modified By",
@@ -318,7 +323,11 @@
                 {
                     "title": "Created Date",
                     "data": "CreatedDate",
-                    "visible": false
+                    "visible": false,
+                    "render": function (data) {
+                        var date = new Date(parseInt(data.substr(6)));
+                        return $.format.date(date, "MM/dd/yyyy hh:mm:ss a")
+                    },
                 },
                 {
                     "title": "Modified By",
@@ -333,4 +342,25 @@
             ]
         });
     }
+
+    $('#btnExport').on('click', function (e) {
+        var ItemID = $('#hItemID').val();
+        
+        $.ajax({
+            url: ExportHistory,
+            type: 'GET',
+            data: {
+                ItemID: ItemID
+            },
+            success: function (model) {
+                if (model != "") {
+                    window.location.href = model;
+
+                    var message = "Successfully downloaded! Open file to view records.";
+                    alert(message);
+                    location.reload();
+                }
+            }
+        });
+    });
 });

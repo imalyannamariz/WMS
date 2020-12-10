@@ -4,12 +4,14 @@
 }
 
 @section scripts{
+    <script src="~/Scripts/jquery.dateFormat-1.0.js"></script>
     <script type="text/javascript">
         var GetRecord = "@Url.Action("GetRecord", "Inventory")";
         var CreateUpdate = "@Url.Action("CreateUpdate", "Inventory")";
         var GetRowDetails = "@Url.Action("GetRowDetails", "Inventory")";
         var GetDelete = "@Url.Action("GetDelete", "Inventory")";
         var GetHistory = "@Url.Action("GetHistory", "Inventory")"
+        var ExportHistory = "@Url.Action("ExportHistory", "Inventory")"
 
         $('#InventoryForm').submit(function () {
             if ($('#UsedStocks').val() == '') {
@@ -204,6 +206,10 @@
             <div class="modal-body">
                 <div class="card ml-2 mr-2 mb-2 bg-light">
                     <div class="card-body">
+                        <input type="hidden" id="hItemID" />
+                        <div>
+                            <button id="btnExport" class="btn btn-primary btn-sm align-content-end" type="button" title="Export Record">Export</button>
+                        </div>
                         <div class="table-responsive table-responsive-sm">
                             <table class="table small table-striped table-hover" id="tblHistory"></table>
                         </div>

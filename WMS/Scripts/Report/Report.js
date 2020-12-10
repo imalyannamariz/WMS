@@ -23,12 +23,39 @@
         fnTable(CategoryID, WarehouseID, StartDate, EndDate);
     });
 
+    $('#btnExport').on('click', function () {
+        var CategoryID = $('#CategoryID').val();
+        var WarehouseID = $('#WarehouseID').val();
+        var StartDate = $('#StartDate').val();
+        var EndDate = $('#EndDate').val();
+
+        $.ajax({
+            url: ExportRecord,
+            type: 'GET',
+            data: {
+                CategoryID: CategoryID,
+                WarehouseID: WarehouseID,
+                StartDate: StartDate,
+                EndDate: EndDate
+            },
+            success: function (model) {
+                if (model != "") {
+                    window.location.href = model;
+
+                    var message = "Successfully downloaded! Open file to view records.";
+                    alert(message);
+                    location.reload();
+                }
+            }
+        });
+    });
+
     fnTable = function (CategoryID, WarehouseID, StartDate, EndDate) {
         $('#tblReport').DataTable({
             destroy: true,
             searching: true,
             pageLength: 15,
-            order: [14, 'desc'],
+            order: [14],
             dom: 'ftp',
             ajax: {
                 url: ShowRecord,
@@ -161,6 +188,20 @@
                     "visible": false
                 }
             ]
+        });
+    }
+
+    fnExport = function (CategoryID, WarehouseID, StartDate, EndDate) {
+        $.ajax({
+            url: ExportRecord,
+            type: 'GET',
+            data: {
+
+            },
+            dataSrc: '',
+            complete: function (response, request) {
+                //console
+            }
         });
     }
 });
