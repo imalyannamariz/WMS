@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="@Url.Content("~/megaworld.ico")" />
+    <title>@ViewBag.Title | WMS Portal</title>
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/custom-css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <nav class="uk-navbar uk-navbar-attached">
+        <div class="uk-container uk-container-center">
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="@Url.Action("Index", "Home")" class="uk-navbar-nav-subtitle">
+                        <b>Warehouse Management System Portal</b>
+                        <div>MEGAWORLD CORPORATION</div>
+                    </a>
+                </li>
+            </ul>
+            <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")">HOME</a></li>
+                    <li><a href="@Url.Action("Register", "Account")"><i class="uk-icon-pencil"></i> REGISTER</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="formRegistration" class="uk-container uk-container-center">
+        @RenderBody()
+    </div>
+
+    <footer id="lblFooter">
+        &copy; @DateTime.Now.Year.ToString() Megaworld Corporation - Systems Management Group | Operations Division Department, All Rights Reserved.
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", false)
+
+    <script>
+        @ViewBag.Result
+    </script>
+
+
+</body>
+
+</html>
